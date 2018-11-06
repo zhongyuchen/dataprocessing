@@ -38,6 +38,8 @@ def extract_movies(dom):
     for movie in movie_list:
         # title
         title = movie.find("a", href = re.compile("title")).text
+        # ignore unicode characters
+        title_name = title.encode('ascii', 'ignore').decode('ascii')
 
         # rating
         rating = movie.find("strong").text
@@ -56,6 +58,8 @@ def extract_movies(dom):
             while actor_p.name == "a":
                 actors = actors + ", " + actor_p.text
                 actor_p = actor_p.find_next()
+            # ignore unicode characters
+            actors = actors.encode('ascii', 'ignore').decode('ascii')
         else:
             actors = ""
 
