@@ -10,6 +10,7 @@ from requests import get
 from requests.exceptions import RequestException
 from contextlib import closing
 from bs4 import BeautifulSoup
+import re
 
 TARGET_URL = "https://www.imdb.com/search/title?title_type=feature&release_date=2008-01-01,2018-01-01&num_votes=5000,&sort=user_rating,desc"
 BACKUP_HTML = 'movies.html'
@@ -32,7 +33,44 @@ def extract_movies(dom):
     # NOTE: FOR THIS EXERCISE YOU ARE ALLOWED (BUT NOT REQUIRED) TO IGNORE
     # UNICODE CHARACTERS AND SIMPLY LEAVE THEM OUT OF THE OUTPUT.
 
-    return []   # REPLACE THIS LINE AS WELL IF APPROPRIATE
+    movie_list = dom.find_all("div", class_ = "lister-item-content")
+    movies = []
+    for movie in movie_list:
+        # title
+        title = movie.find("a", href = re.compile("title")).text
+
+        # rating
+        rating = movie.find("strong").text
+
+        # year
+        year = movie.find("span", class_ = "lister-item-year text-muted unbold").text
+        year_number = re.findall(r"\d+", year)[0]
+
+        # actors
+        staff_1st = movie.find("a", href=re.compile("name"))
+        if staff_1st:
+            bar = staff_1st.find_next("span")
+            actor_p = bar.find_next("a")
+            actors = actor_p.text
+            actor_p = actor_p.find_next()
+            while actor_p.name == "a":
+                actors = actors + ", " + actor_p.text
+                actor_p = actor_p.find_next()
+        else:
+            actors = ""
+
+        # runtime
+        runtime = movie.find("span", class_ = "runtime").text
+        runtime_number = re.findall(r"\d+", runtime)[0]
+
+        # movie
+        movies.append({'title': title,
+                       'rating': rating,
+                       'year': year_number,
+                       'actors': actors,
+                       'runtime': runtime_number})
+
+    return movies   # REPLACE THIS LINE AS WELL IF APPROPRIATE
 
 
 def save_csv(outfile, movies):
@@ -43,6 +81,12 @@ def save_csv(outfile, movies):
     writer.writerow(['Title', 'Rating', 'Year', 'Actors', 'Runtime'])
 
     # ADD SOME CODE OF YOURSELF HERE TO WRITE THE MOVIES TO DISK
+    for movie in movies:
+        writer.writerow([movie['title'],
+                         movie['rating'],
+                         movie['year'],
+                         movie['actors'],
+                         movie['runtime']])
 
 
 def simple_get(url):
