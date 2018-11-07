@@ -18,3 +18,4 @@ data_dict = {str(key): [] for key in range(START_YEAR, END_YEAR)}
 
 if __name__ == "__main__":
     print(data_dict)
+
