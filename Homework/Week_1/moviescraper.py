@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# Name:
-# Student number:
+# Name: Zhongyu Chen
+# Student number: 12455822
 """
 This script scrapes IMDB and outputs a CSV file with highest rated movies.
 """
