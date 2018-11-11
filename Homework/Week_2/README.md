@@ -1,6 +1,7 @@
 # Week_2: Exploratory Data Analysis
 
-Data analysis with pandas library.
+ - Data analysis with pandas library.
+ - Ploting with seaborn library.
 
 ## 1. Code
 
@@ -39,6 +40,14 @@ Data analysis with pandas library.
 
  - Print the dataframe in this .json file.
  - Json format.
+ 
+### scatter.jpg
+
+ - A scatter plot.
+ - Each dot is an observation (country).
+ - Colored according to each region. 
+ - X-axis represents GDP.
+ - Y-axis represents Infant Mortality.
 
 ## 4. README.md
 

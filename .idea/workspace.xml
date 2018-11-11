@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3556bb1f-c2eb-41cb-a568-f7752e87f6fd" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Homework/Week_2/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/Homework/Week_2/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Homework/Week_2/GDP histogram.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Homework/Week_2/GDP histogram.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Homework/Week_2/eda.py" beforeDir="false" afterPath="$PROJECT_DIR$/Homework/Week_2/eda.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Homework/Week_2/infant mortality box.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Homework/Week_2/infant mortality box.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Homework/Week_2/output.json" beforeDir="false" afterPath="$PROJECT_DIR$/Homework/Week_2/output.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -28,7 +31,7 @@
         <counts>
           <entry key="csv" value="6" />
           <entry key="html" value="4" />
-          <entry key="jpg" value="12" />
+          <entry key="jpg" value="15" />
           <entry key="json" value="1" />
           <entry key="md" value="11" />
           <entry key="py" value="13" />
@@ -38,7 +41,7 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="HTML" value="4" />
-          <entry key="Image" value="12" />
+          <entry key="Image" value="15" />
           <entry key="JSON" value="1" />
           <entry key="Markdown" value="11" />
           <entry key="PLAIN_TEXT" value="7" />
@@ -49,40 +52,45 @@
         <counts>
           <entry key="html" value="8" />
           <entry key="md" value="4006" />
-          <entry key="py" value="10523" />
+          <entry key="py" value="11090" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="8" />
           <entry key="Markdown" value="4006" />
-          <entry key="Python" value="10523" />
+          <entry key="Python" value="11090" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Homework/Week_2/eda.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="104" lean-forward="true" selection-start-line="104" selection-end-line="104" />
+            <state relative-caret-position="333">
+              <caret line="112" column="72" selection-start-line="112" selection-start-column="72" selection-end-line="112" selection-end-column="72" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
-                <marker date="1541964602668" expanded="true" signature="410:413" ph="..." />
-                <marker date="1541964602668" expanded="true" signature="479:1338" ph="..." />
-                <marker date="1541964602668" expanded="true" signature="1527:1530" ph="..." />
+                <marker date="1541970686453" expanded="true" signature="484:487" ph="..." />
+                <marker date="1541970686453" expanded="true" signature="553:1582" ph="..." />
+                <marker date="1541970686453" expanded="true" signature="1771:1774" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Homework/Week_2/scatter.jpg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Homework/Week_2/output.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="8" column="35" lean-forward="true" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
+            <state>
+              <caret column="1" lean-forward="true" selection-start-column="1" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -90,18 +98,6 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Homework/Week_2/GDP histogram.jpg">
           <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Homework/Week_1/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="1740">
-                <caret line="76" lean-forward="true" selection-start-line="76" selection-end-line="78" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
@@ -118,7 +114,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Homework/Week_2/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
@@ -189,8 +185,8 @@
         <option value="$PROJECT_DIR$/Design/README.md" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/Homework/README.md" />
-        <option value="$PROJECT_DIR$/Homework/Week_2/eda.py" />
         <option value="$PROJECT_DIR$/Homework/Week_2/README.md" />
+        <option value="$PROJECT_DIR$/Homework/Week_2/eda.py" />
       </list>
     </option>
   </component>
@@ -313,7 +309,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21173105" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21173105" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -327,7 +323,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32891566" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.3192771" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.30722892" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -504,13 +500,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Homework/Week_2/input.csv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Homework/Week_2/box.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -524,16 +513,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Homework/Week_2/infant mortality box.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Homework/Week_2/GDP histogram.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Homework/Week_2/output.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="35" lean-forward="true" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
+    <entry file="file://$PROJECT_DIR$/Homework/Week_2/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="336">
+            <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
@@ -547,26 +533,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Homework/Week_2/eda.py">
+    <entry file="file://$PROJECT_DIR$/Homework/Week_2/input.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="104" lean-forward="true" selection-start-line="104" selection-end-line="104" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-            <marker date="1541964602668" expanded="true" signature="410:413" ph="..." />
-            <marker date="1541964602668" expanded="true" signature="479:1338" ph="..." />
-            <marker date="1541964602668" expanded="true" signature="1527:1530" ph="..." />
-          </folding>
+        <state relative-caret-position="120">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Homework/Week_2/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="336">
-            <caret line="14" column="16" selection-start-line="14" selection-start-column="16" selection-end-line="14" selection-end-column="16" />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/Homework/Week_2/output.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="1" lean-forward="true" selection-start-column="1" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Homework/Week_2/infant mortality box.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Homework/Week_2/GDP histogram.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Homework/Week_2/scatter.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Homework/Week_2/eda.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="112" column="72" selection-start-line="112" selection-start-column="72" selection-end-line="112" selection-end-column="72" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <marker date="1541970686453" expanded="true" signature="484:487" ph="..." />
+            <marker date="1541970686453" expanded="true" signature="553:1582" ph="..." />
+            <marker date="1541970686453" expanded="true" signature="1771:1774" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

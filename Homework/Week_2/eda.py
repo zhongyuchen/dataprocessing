@@ -2,6 +2,7 @@ import pandas as pd
 import csv
 import re
 import json
+import seaborn as sns
 
 
 # global variables
@@ -12,6 +13,8 @@ COLS = ["Country",
         "Pop. Density (per sq. mi.)",
         "Infant mortality (per 1000 births)",
         "GDP ($ per capita) dollars"]
+# the highest GDP is around 170000
+GDP_MAX = 180000
 
 
 def get_number(s):
@@ -30,18 +33,22 @@ def load(filename):
             # take out unusable rows
             flag = 1
             for col in COLS:
+                # missing or unknown data
                 if row[col] == "" or row[col] == "unknown":
                     flag = 0
                     break
+            # preprocess data and store data into a list
             if flag:
-                # preprocess data and store data into a list
                 # strip() strips spaces on both ends
                 # get_number() extracts number
-                data.append([row[COLS[0]].strip(),
-                             row[COLS[1]].strip(),
-                             get_number(row[COLS[2]]),
-                             get_number(row[COLS[3]]),
-                             int(get_number(row[COLS[4]]))])
+                # take out rows with impossible GDP
+                gdp = int(get_number(row[COLS[4]]))
+                if gdp < GDP_MAX:
+                    data.append([row[COLS[0]].strip(),
+                                 row[COLS[1]].strip(),
+                                 get_number(row[COLS[2]]),
+                                 get_number(row[COLS[3]]),
+                                 gdp])
     # return data list
     return data
 
@@ -101,4 +108,8 @@ if __name__ == "__main__":
 
     # dict > .json file
     with open(OUTPUT_JSON, "w") as file:
-        json.dump(dict, file, indent=4)
+        json.dump(dict, file, indent = 4)
+
+    # a scatterplot incorporating both the GDP and Infant Mortality Data
+    scatter = sns.relplot(x = COLS[4], y = COLS[3], hue = COLS[1], data = dataframe)
+    scatter.savefig("scatter.jpg")
