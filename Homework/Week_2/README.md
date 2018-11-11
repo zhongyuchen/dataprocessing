@@ -48,6 +48,12 @@
  - Colored according to each region. 
  - X-axis represents GDP.
  - Y-axis represents Infant Mortality.
+ 
+### regression.jpg
+
+ - Linear regression.
+ - X-axis represents GDP.
+ - Y-axis represents 1 / Infant Mortality.
 
 ## 4. README.md
 

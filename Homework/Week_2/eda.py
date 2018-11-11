@@ -113,3 +113,8 @@ if __name__ == "__main__":
     # a scatterplot incorporating both the GDP and Infant Mortality Data
     scatter = sns.relplot(x = COLS[4], y = COLS[3], hue = COLS[1], data = dataframe)
     scatter.savefig("scatter.jpg")
+
+    # regression of GDP and Infant Mortality Data
+    dataframe['1 / Infant Mortality'] = 1 / dataframe[COLS[3]]
+    regression = sns.lmplot(x = COLS[4], y = "1 / Infant Mortality", data = dataframe)
+    regression.savefig("regression.jpg")
