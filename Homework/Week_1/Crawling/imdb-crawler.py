@@ -172,7 +172,7 @@ def scrape_top_250(soup):
     # URLS TO EACH MOVIE'S IMDB PAGE, ADD THOSE TO THE LIST movie_urls.
 
     # get the title column
-    titles = soup.find_all("td", class_ = "titleColumn")
+    titles = soup.find_all("td", class_="titleColumn")
     # get the href path
     for title in titles:
         path = title.find("a").get("href")
@@ -184,7 +184,7 @@ def scrape_top_250(soup):
 
 def get_names(staff):
     # find all the names
-    name_list = staff.find_all("a", href = re.compile("name"))
+    name_list = staff.find_all("a", href=re.compile("name"))
 
     # combine the names into a string
     length = len(name_list)
@@ -223,39 +223,39 @@ def scrape_movie_page(dom):
     # in the docstring of this function).
 
     # title
-    title = dom.find("div", id = "ratingWidget").find("strong").text
+    title = dom.find("div", id="ratingWidget").find("strong").text
 
     # year
-    year = dom.find("a", href = re.compile("^/year/")).text
+    year = dom.find("a", href=re.compile("^/year/")).text
 
     # duration
     duration = get_minutes(dom.find("time").text)
 
     # genre(s)
     subtext = dom.find("div", class_="subtext")
-    genre_list = subtext.find_all("a", href = re.compile("^/search/title"))
+    genre_list = subtext.find_all("a", href=re.compile("^/search/title"))
     length = len(genre_list)
     genres = genre_list[0].text.replace('\n', '').replace(' ', '')
     for i in range(1, length):
         genres += "; " + genre_list[i].text.replace('\n', '').replace(' ', '')
 
     # director(s)
-    staff = dom.find("div", class_ = "credit_summary_item")
+    staff = dom.find("div", class_="credit_summary_item")
     directors = get_names(staff)
 
     # writer(s)
-    staff = staff.find_next("div", class_ = "credit_summary_item")
+    staff = staff.find_next("div", class_="credit_summary_item")
     writers = get_names(staff)
 
     # actor(s)
-    staff = staff.find_next("div", class_ = "credit_summary_item")
+    staff = staff.find_next("div", class_="credit_summary_item")
     actors = get_names(staff)
 
     # rating
-    rating = dom.find("span", itemprop = "ratingValue").text
+    rating = dom.find("span", itemprop="ratingValue").text
 
     # number of ratings
-    count = dom.find("span", class_ = "small", itemprop = "ratingCount").text.replace(',', '')
+    count = dom.find("span", class_="small", itemprop="ratingCount").text.replace(',', '')
 
     # movie info
     movie = [title, year, duration, genres, directors, writers, actors, rating, count]
