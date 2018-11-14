@@ -26,7 +26,7 @@ def load(filename):
     # load csv file, parse and preprocess data
     data = []
     # load csv
-    with open(filename, newline = '') as file:
+    with open(filename, newline='') as file:
         # parse data
         reader = csv.DictReader(file)
         for row in reader:
@@ -57,7 +57,7 @@ def build(filename):
     # load csv file, parse and preprocess data
     data = load(filename)
     # build dataframe
-    return pd.DataFrame(data, columns = COLS, index = range(len(data)))
+    return pd.DataFrame(data, columns=COLS, index=range(len(data)))
 
 
 if __name__ == "__main__":
@@ -87,9 +87,9 @@ if __name__ == "__main__":
 
     # five number summary of Infant mortality (per 1000 births)
     infant_min = dataframe.min()[COLS[3]]
-    infant_q1 = dataframe.quantile(q = 0.25)[COLS[3]]
+    infant_q1 = dataframe.quantile(q=0.25)[COLS[3]]
     infant_median = dataframe.median()[COLS[3]]
-    infant_q3 = dataframe.quantile(q = 0.75)[COLS[3]]
+    infant_q3 = dataframe.quantile(q=0.75)[COLS[3]]
     infant_max = dataframe.max()[COLS[3]]
     print("five number summary of Infant mortality (per 1000 births)")
     print(f"min: {infant_min}")
@@ -108,13 +108,13 @@ if __name__ == "__main__":
 
     # dict > .json file
     with open(OUTPUT_JSON, "w") as file:
-        json.dump(dict, file, indent = 4)
+        json.dump(dict, file, indent=4)
 
     # a scatterplot incorporating both the GDP and Infant Mortality Data
-    scatter = sns.relplot(x = COLS[4], y = COLS[3], hue = COLS[1], data = dataframe)
+    scatter = sns.relplot(x=COLS[4], y=COLS[3], hue=COLS[1], data=dataframe)
     scatter.savefig("scatter.jpg")
 
     # regression of GDP and Infant Mortality Data
     dataframe['1 / Infant Mortality'] = 1 / dataframe[COLS[3]]
-    regression = sns.lmplot(x = COLS[4], y = "1 / Infant Mortality", data = dataframe)
+    regression = sns.lmplot(x=COLS[4], y="1 / Infant Mortality", data=dataframe)
     regression.savefig("regression.jpg")
