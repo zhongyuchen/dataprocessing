@@ -33,11 +33,11 @@ def extract_movies(dom):
     # NOTE: FOR THIS EXERCISE YOU ARE ALLOWED (BUT NOT REQUIRED) TO IGNORE
     # UNICODE CHARACTERS AND SIMPLY LEAVE THEM OUT OF THE OUTPUT.
 
-    movie_list = dom.find_all("div", class_ = "lister-item-content")
+    movie_list = dom.find_all("div", class_="lister-item-content")
     movies = []
     for movie in movie_list:
         # title
-        title = movie.find("a", href = re.compile("title")).text
+        title = movie.find("a", href=re.compile("title")).text
         # ignore unicode characters
         title_name = title.encode('ascii', 'ignore').decode('ascii')
 
@@ -45,7 +45,7 @@ def extract_movies(dom):
         rating = movie.find("strong").text
 
         # year
-        year = movie.find("span", class_ = "lister-item-year text-muted unbold").text
+        year = movie.find("span", class_="lister-item-year text-muted unbold").text
         year_number = re.findall(r"\d+", year)[0]
 
         # actors
@@ -64,7 +64,7 @@ def extract_movies(dom):
             actors = ""
 
         # runtime
-        runtime = movie.find("span", class_ = "runtime").text
+        runtime = movie.find("span", class_="runtime").text
         runtime_number = re.findall(r"\d+", runtime)[0]
 
         # movie
