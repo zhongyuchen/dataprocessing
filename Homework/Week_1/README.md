@@ -22,7 +22,6 @@ Make a copy of the website and scrape data
  - Extract and process Title, Rating, Year of release,
  Actors/actresses and Runtime of the movies
  to store the data in a dictionary.
- 
  - Usage of encode() and decode() can ignore unicode
  characters.
  
@@ -38,7 +37,6 @@ Read data from a csv file and make a chart.
  - Use csv.DictReader() to read the file as a dictionary
  and store average rating and amount of movies each
  year into dictionaries.
- 
  - Use matplotlib.pyplot to draw a chart
  showing the average rating and the amount
  of movies among top 50 each year.
@@ -64,12 +62,10 @@ Visualization of the average rating and the amount
  shows that among those top 50 movies,
  movies released in 2008, 2016 and 2017 
  scored significantly higher.
- 
  - Amount of movies among top 50 (green bar):
  shows that there are more movies which
  successfully made their way in top 50 
  in 2014, 2016 and 2017.
- 
  - To sum up, in 2016 and 2017, movies among 
  IMDB top 50 scored significantly higher.
  
