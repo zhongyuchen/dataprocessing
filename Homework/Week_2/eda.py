@@ -60,6 +60,49 @@ def build(filename):
     return pd.DataFrame(data, columns=COLS, index=range(len(data)))
 
 
+def central_tendency(dataframe, number):
+    # central tendency
+    gdp_mean = dataframe.mean()[COLS[number]]
+    gdp_median = dataframe.median()[COLS[number]]
+    gdp_mode = dataframe.mode()[COLS[number]][0]
+    print("central tendency of GDP ($ per capita) dollars")
+    print(f"mean:   {gdp_mean}")
+    print(f"median: {gdp_median}")
+    print(f"mode:   {gdp_mode}")
+    print()
+
+
+def stddev(dataframe, number):
+    # standard deviation
+    gdp_std = dataframe.std()[COLS[number]]
+    print(f"stanard deviation of GDP ($ per capita) dollars: {gdp_std}")
+    print()
+
+
+def five_number_summary(dataframe, number):
+    # finve number summary
+    infant_min = dataframe.min()[COLS[number]]
+    infant_q1 = dataframe.quantile(q=0.25)[COLS[number]]
+    infant_median = dataframe.median()[COLS[number]]
+    infant_q3 = dataframe.quantile(q=0.75)[COLS[number]]
+    infant_max = dataframe.max()[COLS[number]]
+    print("five number summary of Infant mortality (per 1000 births)")
+    print(f"min: {infant_min}")
+    print(f"1st quantile: {infant_q1}")
+    print(f"median: {infant_median}")
+    print(f"3rd quantile: {infant_q3}")
+    print(f"max: {infant_max}")
+    print()
+
+
+def dataframe_to_json(dataframe, filename):
+    # dataframe > dict
+    dict = dataframe.set_index(COLS[0]).to_dict('index')
+    # dict > .json file
+    with open(filename, "w") as file:
+        json.dump(dict, file, indent=4)
+
+
 if __name__ == "__main__":
     # main
 
@@ -67,48 +110,24 @@ if __name__ == "__main__":
     dataframe = build(INPUT_CSV)
 
     # central tendency of GDP ($ per capita) dollars
-    gdp_mean = dataframe.mean()[COLS[4]]
-    gdp_median = dataframe.median()[COLS[4]]
-    gdp_mode = dataframe.mode()[COLS[4]][0]
-    print("central tendency of GDP ($ per capita) dollars")
-    print(f"mean:   {gdp_mean}")
-    print(f"median: {gdp_median}")
-    print(f"mode:   {gdp_mode}")
-    print()
+    central_tendency(dataframe, 4)
 
     # stanard deviation of GDP ($ per capita) dollars
-    gdp_std = dataframe.std()[COLS[4]]
-    print(f"stanard deviation of GDP ($ per capita) dollars: {gdp_std}")
-    print()
+    stddev(dataframe, 4)
 
     # histogram of GDP ($ per capita) dollars
     gdp_hist = dataframe[COLS[4]].plot.hist().get_figure()
     gdp_hist.savefig("GDP histogram.jpg")
 
     # five number summary of Infant mortality (per 1000 births)
-    infant_min = dataframe.min()[COLS[3]]
-    infant_q1 = dataframe.quantile(q=0.25)[COLS[3]]
-    infant_median = dataframe.median()[COLS[3]]
-    infant_q3 = dataframe.quantile(q=0.75)[COLS[3]]
-    infant_max = dataframe.max()[COLS[3]]
-    print("five number summary of Infant mortality (per 1000 births)")
-    print(f"min: {infant_min}")
-    print(f"1st quantile: {infant_q1}")
-    print(f"median: {infant_median}")
-    print(f"3rd quantile: {infant_q3}")
-    print(f"max: {infant_max}")
-
+    five_number_summary(dataframe, 3)
 
     # box plot of Infant mortality (per 1000 births)
     infant_box = dataframe[COLS[3]].plot.box().get_figure()
     infant_box.savefig("infant mortality box.jpg")
 
-    # dataframe > dict
-    dict = dataframe.set_index(COLS[0]).to_dict('index')
-
-    # dict > .json file
-    with open(OUTPUT_JSON, "w") as file:
-        json.dump(dict, file, indent=4)
+    # dataframe > json
+    dataframe_to_json(dataframe, OUTPUT_JSON)
 
     # a scatterplot incorporating both the GDP and Infant Mortality Data
     scatter = sns.relplot(x=COLS[4], y=COLS[3], hue=COLS[1], data=dataframe)
