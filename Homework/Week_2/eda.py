@@ -117,14 +117,14 @@ if __name__ == "__main__":
 
     # histogram of GDP ($ per capita) dollars
     gdp_hist = dataframe[COLS[4]].plot.hist().get_figure()
-    gdp_hist.savefig("GDP histogram.jpg")
+    gdp_hist.savefig("GDP_histogram.jpg")
 
     # five number summary of Infant mortality (per 1000 births)
     five_number_summary(dataframe, 3)
 
     # box plot of Infant mortality (per 1000 births)
     infant_box = dataframe[COLS[3]].plot.box().get_figure()
-    infant_box.savefig("infant mortality box.jpg")
+    infant_box.savefig("infant_mortality_box.jpg")
 
     # dataframe > json
     dataframe_to_json(dataframe, OUTPUT_JSON)
