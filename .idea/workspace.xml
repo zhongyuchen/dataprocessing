@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3556bb1f-c2eb-41cb-a568-f7752e87f6fd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Homework/Week_3/convertCSV2JSON.py" beforeDir="false" afterPath="$PROJECT_DIR$/Homework/Week_3/convertCSV2JSON.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Homework/Week_3/summer.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Homework/Week_3/summer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Homework/Week_3/summer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +28,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="csv" value="11" />
-          <entry key="html" value="10" />
+          <entry key="html" value="11" />
           <entry key="jpg" value="30" />
           <entry key="json" value="6" />
           <entry key="md" value="25" />
@@ -41,7 +38,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="10" />
+          <entry key="HTML" value="11" />
           <entry key="Image" value="30" />
           <entry key="JSON" value="6" />
           <entry key="Markdown" value="25" />
@@ -51,14 +48,14 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="6090" />
+          <entry key="html" value="6105" />
           <entry key="md" value="4245" />
           <entry key="py" value="12421" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="6090" />
+          <entry key="HTML" value="6105" />
           <entry key="Markdown" value="4245" />
           <entry key="Python" value="12421" />
         </counts>
@@ -79,11 +76,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Homework/Week_3/temperature.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="312">
               <caret line="13" column="24" lean-forward="true" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="216">
+              <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -176,13 +182,13 @@
         <option value="$PROJECT_DIR$/Homework/Week_1/README.md" />
         <option value="$PROJECT_DIR$/Homework/Week_3/README.md" />
         <option value="$PROJECT_DIR$/Homework/Week_3/index.html" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/Homework/Week_1/visualizer.py" />
         <option value="$PROJECT_DIR$/Homework/Week_2/eda.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/Homework/Week_3/KNMI_20171231.csv" />
         <option value="$PROJECT_DIR$/Homework/Week_3/convertCSV2JSON.py" />
         <option value="$PROJECT_DIR$/Homework/Week_3/temperature.html" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -302,7 +308,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24034335" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24034335" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -316,7 +322,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32891566" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.30361447" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.30361447" />
       <window_info anchor="bottom" id="Python Console" order="12" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -555,13 +561,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -624,6 +623,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="312">
           <caret line="13" column="24" lean-forward="true" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="9" column="7" lean-forward="true" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
         </state>
       </provider>
     </entry>
