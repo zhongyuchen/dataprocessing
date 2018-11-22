@@ -2,8 +2,8 @@ import csv
 import json
 
 
-CSV_FILE = "summer.csv"
-JSON_FILE = "summer.json"
+CSV_FILE = "KNMI_20171231.csv"
+JSON_FILE = "temperature.json"
 
 
 def csv2json(csvname, jsonname):
