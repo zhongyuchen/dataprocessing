@@ -59,4 +59,4 @@ if __name__ == "__main__":
     axis_avg.set_ylabel('Average rating', color='r')
 
     # save the figure
-    plt.savefig("Average ratings.jpg")
+    plt.savefig("Average_ratings.jpg")
