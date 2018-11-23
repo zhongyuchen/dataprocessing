@@ -1,56 +1,106 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+    <!--<meta charset="utf-8">-->
+    <!--<title>Github Pages Template</title>-->
+    <!--<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">-->
+
+    <!--&lt;!&ndash; Combo with CSSNormalize, CSSGrids-Responsive, CSSForm, CSSTable, CSSList (v3.9.1) &ndash;&gt;-->
+    <!--<link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.9.1/build/cssnormalize/cssnormalize-min.css&amp;3.9.1/build/cssgrids-responsive/cssgrids-responsive-min.css&amp;3.9.1/build/cssbutton/cssbutton-min.css&amp;gallery-2013.03.27-22-06/build/gallerycss-csslist/gallerycss-csslist-min.css&amp;gallery-2013.03.27-22-06/build/gallerycss-csstable/gallerycss-csstable-min.css&amp;gallery-2013.03.27-22-06/build/gallerycss-cssform/gallerycss-cssform-min.css">-->
+
+    <!--&lt;!&ndash; Some custom styles to make things pretty. &ndash;&gt;-->
+    <!--<link rel="stylesheet" type="text/css" href="https://rawgithub.com/tilomitra/prettypages/gh-pages/ui.css">-->
+
+    <!--&lt;!&ndash; RainbowJS Syntax Highlighting - Github Theme.-->
+         <!--For more themes, go to https://github.com/ccampbell/rainbow/tree/master/themes &ndash;&gt;-->
+    <!--<link rel="stylesheet" type="text/css" href="https://rawgithub.com/ccampbell/rainbow/master/themes/github.css">-->
+
+    <!--&lt;!&ndash; Modify header colors here to customize the look and feel of the site&ndash;&gt;-->
+    <!--<style>-->
+
+        <!--.header {-->
+            <!--background: rgb(53, 41, 116);-->
+         <!--}-->
+            <!--.header h1 {-->
+                <!--color: white;-->
+            <!--}-->
+             <!--.header h2 {-->
+                 <!--font-weight:300;-->
+                 <!--margin:0;-->
+                 <!--color: rgb(116, 130, 230);-->
+             <!--}-->
+    <!--</style>-->
+
+<!--</head>-->
+
+<!--<body class='yui3-skin-sam'>-->
+
+    <!--<div id="headerMenu" class="yui3-menu yui3-menu-open yui3-menu-horizontal yui3-menu-fixed">-->
+        <!--<span class="yui3-menu-heading">PrettyPages</span>-->
+        <!--<ul>-->
+
+        <!--</ul>-->
+    <!--</div>-->
+    <!--<div class="header yui3-u-1">-->
+
+        <!--<h1 class="yui3-u-1">Data Processing</h1>-->
+        <!--<h2 class="yui3-u">Zhongyu Chen 12455822</h2>-->
+    <!--</div>-->
+    <!--<div class="content">-->
+        <!--<h2>Links</h2>-->
+        <!--<p>-->
+            <!--<a href="Homework\Week_3\temperature.html">Week_3: JavaScript</a>-->
+        <!--</p>-->
+    <!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Github Pages Template</title>
-    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
 
-    <!-- Combo with CSSNormalize, CSSGrids-Responsive, CSSForm, CSSTable, CSSList (v3.9.1) -->
-    <link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.9.1/build/cssnormalize/cssnormalize-min.css&amp;3.9.1/build/cssgrids-responsive/cssgrids-responsive-min.css&amp;3.9.1/build/cssbutton/cssbutton-min.css&amp;gallery-2013.03.27-22-06/build/gallerycss-csslist/gallerycss-csslist-min.css&amp;gallery-2013.03.27-22-06/build/gallerycss-csstable/gallerycss-csstable-min.css&amp;gallery-2013.03.27-22-06/build/gallerycss-cssform/gallerycss-cssform-min.css">
+    {% if site.google_analytics %}
+      <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ site.google_analytics }}');
+      </script>
+    {% endif %}
+    <meta charset="UTF-8">
 
-    <!-- Some custom styles to make things pretty. -->
-    <link rel="stylesheet" type="text/css" href="https://rawgithub.com/tilomitra/prettypages/gh-pages/ui.css">
+{% seo %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
 
-    <!-- RainbowJS Syntax Highlighting - Github Theme.
-         For more themes, go to https://github.com/ccampbell/rainbow/tree/master/themes -->
-    <link rel="stylesheet" type="text/css" href="https://rawgithub.com/ccampbell/rainbow/master/themes/github.css">
+    <header class="page-header" role="banner">
+      <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
+      <h2 class="project-tagline">{{ site.description | default: site.github.project_tagline }}</h2>
+      {% if site.github.is_project_page %}
+        <a href="{{ site.github.repository_url }}" class="btn">View on GitHub</a>
+      {% endif %}
+      {% if site.show_downloads %}
+        <a href="{{ site.github.zip_url }}" class="btn">Download .zip</a>
+        <a href="{{ site.github.tar_url }}" class="btn">Download .tar.gz</a>
+      {% endif %}
+    </header>
 
-    <!-- Modify header colors here to customize the look and feel of the site-->
-    <style>
+    <main id="content" class="main-content" role="main">
+      [Week_3: JavaScript](Homework\Week_3\temperature.html).
 
-        .header {
-            background: rgb(53, 41, 116);
-         }
-            .header h1 {
-                color: white;
-            }
-             .header h2 {
-                 font-weight:300;
-                 margin:0;
-                 color: rgb(116, 130, 230);
-             }
-    </style>
-
-</head>
-
-<body class='yui3-skin-sam'>
-
-    <div id="headerMenu" class="yui3-menu yui3-menu-open yui3-menu-horizontal yui3-menu-fixed">
-        <span class="yui3-menu-heading">PrettyPages</span>
-        <ul>
-
-        </ul>
-    </div>
-    <div class="header yui3-u-1">
-
-        <h1 class="yui3-u-1">Data Processing</h1>
-        <h2 class="yui3-u">Zhongyu Chen 12455822</h2>
-    </div>
-    <div class="content">
-        <h2>Links</h2>
-        <p>
-            <a href="Homework\Week_3\temperature.html">Week_3: JavaScript</a>
-        </p>
-    </div>
-</body>
+      <footer class="site-footer">
+        {% if site.github.is_project_page %}
+          <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
+        {% endif %}
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+  </body>
 </html>
