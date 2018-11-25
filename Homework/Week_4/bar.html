@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Renewable Energy 2016</title>
+    <script type="text/javascript" src="d3/d3.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        var dataset = [];
+        d3.csv("data.csv", function(csvdata, error) {
+            if (error) {
+                // console.log(error);
+            }
+            else {
+                // console.log(typeof(csvdata));
+                for (let i = 0; i < csvdata.length; i++) {
+                    if (csvdata[i]["FREQUENCY"] === "A" &&
+                        csvdata[i]["Flag Codes"] === "" &&
+                        csvdata[i]["INDICATOR"] === "RENEWABLE" &&
+                        csvdata[i]["MEASURE"] === "KTOE" &&
+                        csvdata[i]["SUBJECT"] === "TOT" &&
+                        csvdata[i]["TIME"] === "2016" &&
+                        csvdata[i]["Value"] !== "") {
+                        dataset.push(parseFloat(csvdata[i]["Value"]));
+                    }
+                }
+                console.log(dataset);
+            }
+        });
+
+        // var scale = d3.scale.linear();
+        // scale.domain([])
+
+        var w = 1280;
+        var h = 720;
+        var pad = 1;
+        // var data = [100000,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.1,
+        // 1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.1,
+        // 1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.1,
+        // 1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.1];
+        console.log(dataset);
+        // console.log(dataset.length);
+        var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
+        svg.selectAll("rect").data(dataset).enter().append("rect")
+            .attr("x", function(d, i) {
+                return i * (w / dataset.length);
+            })
+            .attr("y", function(d) {
+                return h - d / 10000;
+            })
+            .attr("width", w / dataset.length - pad)
+            .attr("height", function(d) {
+                return d / 10000;
+            })
+            .attr("fill", "teal");
+    </script>
+</body>
+</html>
