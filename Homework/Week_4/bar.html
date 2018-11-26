@@ -2,58 +2,176 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Renewable Energy 2016</title>
+    <title>Renewable Energy in KTOE, 2016</title>
     <script type="text/javascript" src="d3/d3.js"></script>
+    <script type="text/javascript" src="d3/d3-tip.js"></script>
+    <style>
+        /* color */
+        .bar {
+          fill: teal;
+        }
+
+        /* hover color */
+        .bar:hover {
+          fill: orange;
+        }
+
+        /* rectangle */
+        .d3-tip {
+          line-height: 1;
+          font-weight: bold;
+          padding: 12px;
+          background: rgba(0, 0, 0, 0.8);
+          color: #fff;
+          border-radius: 2px;
+        }
+
+        /* Creates a small triangle extender for the tooltip */
+        .d3-tip:after {
+          box-sizing: border-box;
+          display: inline;
+          font-size: 10px;
+          width: 100%;
+          line-height: 1;
+          color: rgba(0, 0, 0, 0.8);
+          content: "\25BC";
+          position: absolute;
+          text-align: center;
+        }
+
+        /* Style northward tooltips differently */
+        .d3-tip.n:after {
+          margin: -1px 0 0 0;
+          top: 100%;
+          left: 0;
+        }
+    </style>
 </head>
 <body>
+    <p>Renewable Energy in KTOE (thousand tonne of oil equivalent), 2016</p>
     <script type="text/javascript">
+        // var dataset = [];
+        // d3.csv("data.csv", function(csvdata) {
+        //     // console.log(csvdata);
+        //     if (csvdata["FREQUENCY"] === "A" &&
+        //         csvdata["Flag Codes"] === "" &&
+        //         csvdata["INDICATOR"] === "RENEWABLE" &&
+        //         csvdata["MEASURE"] === "KTOE" &&
+        //         csvdata["SUBJECT"] === "TOT" &&
+        //         csvdata["TIME"] === "2016" &&
+        //         csvdata["Value"] !== "") {
+        //         dataset.push(parseFloat(csvdata["Value"]));
+        //     }
+        // });
+
         var dataset = [];
-        d3.csv("data.csv", function(csvdata, error) {
-            if (error) {
-                // console.log(error);
-            }
-            else {
-                // console.log(typeof(csvdata));
-                for (let i = 0; i < csvdata.length; i++) {
-                    if (csvdata[i]["FREQUENCY"] === "A" &&
-                        csvdata[i]["Flag Codes"] === "" &&
-                        csvdata[i]["INDICATOR"] === "RENEWABLE" &&
-                        csvdata[i]["MEASURE"] === "KTOE" &&
-                        csvdata[i]["SUBJECT"] === "TOT" &&
-                        csvdata[i]["TIME"] === "2016" &&
-                        csvdata[i]["Value"] !== "") {
-                        dataset.push(parseFloat(csvdata[i]["Value"]));
+        var country = [];
+        var filename = "data.json";
+
+        // read json file
+        let txtFile = new XMLHttpRequest();
+        txtFile.onreadystatechange = function() {
+            if (txtFile.readyState === 4 && txtFile.status === 200) {
+                data = JSON.parse(txtFile.responseText);
+                // preprocess data and save needed data
+                data.forEach(function(element) {
+                    if (element["LOCATION"] !== "OECD" &&
+                        element["FREQUENCY"] === "A" &&
+                        element["Flag Codes"] === "" &&
+                        element["INDICATOR"] === "RENEWABLE" &&
+                        element["MEASURE"] === "KTOE" &&
+                        element["SUBJECT"] === "TOT" &&
+                        element["TIME"] === "2016" &&
+                        element["Value"] !== "") {
+                        dataset.push(parseFloat(element["Value"]));
+                        country.push(element["LOCATION"]);
                     }
-                }
-                console.log(dataset);
+                });
+                // console.log(dataset);
+                // console.log(country);
+
+                // OECD (total) = 512203.649
+                // max = 152533.691
+                // min = 206.526
+
+                // graph specs
+                var width = 1000;
+                var height = 625;
+                var padding = {top: 50, bottom: 50, left: 50, right: 50, between:1};
+                var tickcnt = 15;
+                var lowerbound = 0;
+                var step = (width - padding.left - padding.right) / dataset.length;
+
+                // x axis scale
+                var xscale = d3.scaleBand()
+                    .domain(country)
+                    .range([0, width - padding.left - padding.right]);
+                // y axis scale
+                var yscale = d3.scaleLinear()
+                    .domain([lowerbound, d3.max(dataset, function(d) { return d; })])
+                    .range([height - padding.bottom, padding.top]);
+
+                // svg
+                var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+
+                // Initialize tooltip
+                var tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                    .html(function(d) {
+                        return "<span style='color:red'>" + d + "</span> <strong>KTOE</strong>";
+                    });
+                // Invoke the tip in the context of your visualization
+                svg.call(tip);
+
+                // draw
+                svg.selectAll(".bar").data(dataset).enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", function(d, i) {
+                        return padding.left + i * step;
+                    })
+                    .attr("y", function(d) {
+                        return yscale(d);
+                    })
+                    .attr("width", step - padding.between)
+                    .attr("height", function(d) {
+                        return height - yscale(d) - padding.bottom;
+                    })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide);
+
+                // y axis
+                var yaxis = d3.axisLeft(yscale)
+                    .ticks(tickcnt);
+                svg.append("g")
+                    .attr("class", "axis")
+                    .attr("transform", "translate(" + padding.left + "," + 0 + ")")
+                    .call(yaxis);
+                svg.append("text")
+                    .text("KTOE")
+                    .style("font-size", "20px")
+                    .attr("transform", "translate(" + padding.left + "," + padding.top + ")");
+
+                // x axis
+                var xaxis = d3.axisBottom(xscale);
+                svg.append("g")
+                    .attr("class", "axis")
+                    .attr("transform", "translate(" + padding.left + "," + (height - padding.bottom) + ")")
+                    .call(xaxis);
+                svg.append("text")
+                    .text("LOCATION")
+                    .style("font-size", "20px")
+                    .attr("transform", "translate(" + (width - padding.right - padding.left) + "," + (height - padding.bottom / 3) + ")");
+
+                // title
+                svg.append("text")
+                    .text("Renewable Energy in KTOE, 2016")
+                    .style("font-size", "25px")
+                    .attr("transform", "translate(" + (width / 2 - 200) + "," + padding.top + ")")
             }
-        });
-
-        // var scale = d3.scale.linear();
-        // scale.domain([])
-
-        var w = 1280;
-        var h = 720;
-        var pad = 1;
-        // var data = [100000,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.1,
-        // 1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.1,
-        // 1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.1,
-        // 1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.1];
-        console.log(dataset);
-        // console.log(dataset.length);
-        var svg = d3.select("body").append("svg").attr("width", w).attr("height", h);
-        svg.selectAll("rect").data(dataset).enter().append("rect")
-            .attr("x", function(d, i) {
-                return i * (w / dataset.length);
-            })
-            .attr("y", function(d) {
-                return h - d / 10000;
-            })
-            .attr("width", w / dataset.length - pad)
-            .attr("height", function(d) {
-                return d / 10000;
-            })
-            .attr("fill", "teal");
+        };
+        txtFile.open("GET", filename);
+        txtFile.send();
     </script>
 </body>
 </html>
