@@ -3,8 +3,22 @@
 <head>
     <meta charset="utf-8">
     <title>Renewable Energy in KTOE, 2016</title>
+
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;">
+
+    <!-- Combo with CSSNormalize, CSSGrids-Responsive, CSSForm, CSSTable, CSSList (v3.9.1) -->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/combo?3.9.1/build/cssnormalize/cssnormalize-min.css&amp;3.9.1/build/cssgrids-responsive/cssgrids-responsive-min.css&amp;3.9.1/build/cssbutton/cssbutton-min.css&amp;gallery-2013.03.27-22-06/build/gallerycss-csslist/gallerycss-csslist-min.css&amp;gallery-2013.03.27-22-06/build/gallerycss-csstable/gallerycss-csstable-min.css&amp;gallery-2013.03.27-22-06/build/gallerycss-cssform/gallerycss-cssform-min.css">
+
+    <!-- Some custom styles to make things pretty. -->
+    <link rel="stylesheet" type="text/css" href="https://rawgithub.com/tilomitra/prettypages/gh-pages/ui.css">
+
+    <!-- RainbowJS Syntax Highlighting - Github Theme.
+         For more themes, go to https://github.com/ccampbell/rainbow/tree/master/themes -->
+    <link rel="stylesheet" type="text/css" href="https://rawgithub.com/ccampbell/rainbow/master/themes/github.css">
+
     <script type="text/javascript" src="d3/d3.min.js"></script>
     <script type="text/javascript" src="d3/d3-tip.js"></script>
+
     <style>
         /* color */
         .bar {
@@ -45,118 +59,149 @@
           top: 100%;
           left: 0;
         }
+
+        .header {
+            background: rgb(53, 41, 116);
+        }
+        .header h1 {
+            color: white;
+        }
+        .header h2 {
+            font-weight:300;
+            margin:0;
+            color: rgb(116, 130, 230);
+        }
     </style>
 </head>
 <body>
-    <p>Renewable Energy in KTOE (thousand tonne of oil equivalent), 2016</p>
-    <script type="text/javascript">
-        // filename
-        var filename = "data.csv";
+    <div id="headerMenu" class="yui3-menu yui3-menu-open yui3-menu-horizontal yui3-menu-fixed">
+        <span class="yui3-menu-heading">
+            <a href="../../index.html">Data Processing</a>
+        </span>
+        <ul>
+            <li><a href="https://github.com/czhongyu/">Other Projects</a></li>
+        </ul>
+    </div>
 
-        // read csv file
-        d3.csv(filename).then(function(csvdata) {
-            // x and y array
-            var dataset = [];
-            var country = [];
+    <div class="header yui3-u-1">
+        <h1 class="yui3-u-1">Week_4: D3 Barchart</h1>
+        <h2 class="yui3-u">Zhongyu Chen, 12455822</h2>
+    </div>
 
-            // store x and y
-            for (let i = 0; i < csvdata.length; i++) {
-                if (csvdata[i]["LOCATION"] !== "OECD" &&
-                    csvdata[i]["FREQUENCY"] === "A" &&
-                    csvdata[i]["Flag Codes"] === "" &&
-                    csvdata[i]["INDICATOR"] === "RENEWABLE" &&
-                    csvdata[i]["MEASURE"] === "KTOE" &&
-                    csvdata[i]["SUBJECT"] === "TOT" &&
-                    csvdata[i]["TIME"] === "2016" &&
-                    csvdata[i]["Value"] !== "") {
-                    dataset.push(parseFloat(csvdata[i]["Value"]));
-                    country.push(csvdata[i]["LOCATION"]);
+    <div class="content">
+        <h2>Renewable Energy in KTOE (thousand tonne of oil equivalent), 2016</h2>
+        <p>Data Source:
+            <a href="https://data.oecd.org/energy/renewable-energy.htm">OECD Renewable energy</a>
+        </p>
+        <script type="text/javascript">
+            // filename
+            var filename = "data.csv";
+
+            // read csv file
+            d3.csv(filename).then(function(csvdata) {
+                // x and y array
+                var dataset = [];
+                var country = [];
+
+                // store x and y
+                for (let i = 0; i < csvdata.length; i++) {
+                    if (csvdata[i]["LOCATION"] !== "OECD" &&
+                        csvdata[i]["FREQUENCY"] === "A" &&
+                        csvdata[i]["Flag Codes"] === "" &&
+                        csvdata[i]["INDICATOR"] === "RENEWABLE" &&
+                        csvdata[i]["MEASURE"] === "KTOE" &&
+                        csvdata[i]["SUBJECT"] === "TOT" &&
+                        csvdata[i]["TIME"] === "2016" &&
+                        csvdata[i]["Value"] !== "") {
+                        dataset.push(parseFloat(csvdata[i]["Value"]));
+                        country.push(csvdata[i]["LOCATION"]);
+                    }
                 }
-            }
-            // console.log(dataset);
-            // console.log(country);
+                // console.log(dataset);
+                // console.log(country);
 
-            // OECD (total) = 512203.649
-            // max = 152533.691
-            // min = 206.526
+                // OECD (total) = 512203.649
+                // max = 152533.691
+                // min = 206.526
 
-            // graph specs
-            var width = 1000;
-            var height = 625;
-            var padding = {top: 50, bottom: 50, left: 50, right: 50, between:1};
-            var tickcnt = 15;
-            var lowerbound = 0;
-            var step = (width - padding.left - padding.right) / dataset.length;
+                // graph specs
+                var width = 1000;
+                var height = 625;
+                var padding = {top: 50, bottom: 50, left: 50, right: 50, between:1};
+                var tickcnt = 15;
+                var lowerbound = 0;
+                var step = (width - padding.left - padding.right) / dataset.length;
 
-            // x axis scale
-            var xscale = d3.scaleBand()
-                .domain(country)
-                .range([0, width - padding.left - padding.right]);
+                // x axis scale
+                var xscale = d3.scaleBand()
+                    .domain(country)
+                    .range([0, width - padding.left - padding.right]);
 
-            // y axis scale
-            var yscale = d3.scaleLinear()
-                .domain([lowerbound, d3.max(dataset, function(d) { return d; })])
-                .range([height - padding.bottom, padding.top]);
+                // y axis scale
+                var yscale = d3.scaleLinear()
+                    .domain([lowerbound, d3.max(dataset, function(d) { return d; })])
+                    .range([height - padding.bottom, padding.top]);
 
-            // svg
-            var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
+                // svg
+                var svg = d3.select("body").append("svg").attr("width", width).attr("height", height);
 
-            // Initialize tooltip
-            var tip = d3.tip()
-                .attr('class', 'd3-tip')
-                .offset([-10, 0])
-                .html(function(d) {
-                    return "<span style='color:red'>" + d + "</span> <strong>KTOE</strong>";
-                });
+                // Initialize tooltip
+                var tip = d3.tip()
+                    .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                    .html(function(d) {
+                        return "<span style='color:red'>" + d + "</span> <strong>KTOE</strong>";
+                    });
 
-            // Invoke the tip in the context of your visualization
-            svg.call(tip);
+                // Invoke the tip in the context of your visualization
+                svg.call(tip);
 
-            // draw bar
-            svg.selectAll(".bar").data(dataset).enter().append("rect")
-                .attr("class", "bar")
-                .attr("x", function(d, i) {
-                    return padding.left + i * step;
-                })
-                .attr("y", function(d) {
-                    return yscale(d);
-                })
-                .attr("width", step - padding.between)
-                .attr("height", function(d) {
-                    return height - yscale(d) - padding.bottom;
-                })
-                .on('mouseover', tip.show)
-                .on('mouseout', tip.hide);
+                // draw bar
+                svg.selectAll(".bar").data(dataset).enter().append("rect")
+                    .attr("class", "bar")
+                    .attr("x", function(d, i) {
+                        return padding.left + i * step;
+                    })
+                    .attr("y", function(d) {
+                        return yscale(d);
+                    })
+                    .attr("width", step - padding.between)
+                    .attr("height", function(d) {
+                        return height - yscale(d) - padding.bottom;
+                    })
+                    .on('mouseover', tip.show)
+                    .on('mouseout', tip.hide);
 
-            // y axis
-            var yaxis = d3.axisLeft(yscale)
-                .ticks(tickcnt);
-            svg.append("g")
-                .attr("class", "axis")
-                .attr("transform", "translate(" + padding.left + "," + 0 + ")")
-                .call(yaxis);
-            svg.append("text")
-                .text("KTOE")
-                .style("font-size", "20px")
-                .attr("transform", "translate(" + padding.left + "," + padding.top + ")");
+                // y axis
+                var yaxis = d3.axisLeft(yscale)
+                    .ticks(tickcnt);
+                svg.append("g")
+                    .attr("class", "axis")
+                    .attr("transform", "translate(" + padding.left + "," + 0 + ")")
+                    .call(yaxis);
+                svg.append("text")
+                    .text("KTOE")
+                    .style("font-size", "20px")
+                    .attr("transform", "translate(" + padding.left + "," + padding.top + ")");
 
-            // x axis
-            var xaxis = d3.axisBottom(xscale);
-            svg.append("g")
-                .attr("class", "axis")
-                .attr("transform", "translate(" + padding.left + "," + (height - padding.bottom) + ")")
-                .call(xaxis);
-            svg.append("text")
-                .text("LOCATION")
-                .style("font-size", "20px")
-                .attr("transform", "translate(" + (width - padding.right - padding.left) + "," + (height - padding.bottom / 3) + ")");
+                // x axis
+                var xaxis = d3.axisBottom(xscale);
+                svg.append("g")
+                    .attr("class", "axis")
+                    .attr("transform", "translate(" + padding.left + "," + (height - padding.bottom) + ")")
+                    .call(xaxis);
+                svg.append("text")
+                    .text("LOCATION")
+                    .style("font-size", "20px")
+                    .attr("transform", "translate(" + (width - padding.right - padding.left) + "," + (height - padding.bottom / 3) + ")");
 
-            // title
-            svg.append("text")
-                .text("Renewable Energy in KTOE, 2016")
-                .style("font-size", "25px")
-                .attr("transform", "translate(" + (width / 2 - 200) + "," + padding.top + ")")
-        });
-    </script>
+                // title
+                svg.append("text")
+                    .text("Renewable Energy in KTOE, 2016")
+                    .style("font-size", "25px")
+                    .attr("transform", "translate(" + (width / 2 - 200) + "," + padding.top + ")")
+            });
+        </script>
+    </div>
 </body>
 </html>
