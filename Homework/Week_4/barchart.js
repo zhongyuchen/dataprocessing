@@ -4,7 +4,7 @@ function barchart(dataset, country) {
     // graph specs
     var width = 1000;
     var height = 625;
-    var padding = {top: 50, bottom: 50, left: 50, right: 50, between:1};
+    var padding = {top: 50, bottom: 50, left: 50, right: 1, between:1};
     var tickcnt = 15;
     var lowerbound = 0;
     var step = (width - padding.left - padding.right) / dataset.length;
@@ -70,7 +70,7 @@ function barchart(dataset, country) {
     svg.append("text")
         .text("LOCATION")
         .style("font-size", "20px")
-        .attr("transform", "translate(" + (width - padding.right - padding.left) + "," + (height - padding.bottom / 3) + ")");
+        .attr("transform", "translate(" + (width - padding.right - padding.left - 45) + "," + (height - padding.bottom / 3) + ")");
 
     // title
     svg.append("text")

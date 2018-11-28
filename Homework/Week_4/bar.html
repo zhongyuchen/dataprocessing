@@ -1,24 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <!-- CSS  -->
+    <link href="../../materialize/css/icons.css" rel="stylesheet">
+    <link href="../../materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="../../materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
-    <!-- Combo with CSSNormalize, CSSGrids-Responsive, CSSForm, CSSTable, CSSList (v3.9.1) -->
-    <link rel="stylesheet" href="../../css/cssbutton-min.css">
-    <link rel="stylesheet" href="../../css/cssgrids-responsive-min.css">
-    <link rel="stylesheet" href="../../css/cssnormalize-min.css">
-    <link rel="stylesheet" href="../../css/gallerycss-cssform-min.css">
-    <link rel="stylesheet" href="../../css/gallerycss-csslist-min.css">
-    <link rel="stylesheet" href="../../css/gallerycss-csstable-min.css">
-
-    <!-- Some custom styles to make things pretty. -->
-    <link rel="stylesheet" type="text/css" href="https://rawgithub.com/tilomitra/prettypages/gh-pages/ui.css">
-
-    <!-- RainbowJS Syntax Highlighting - Github Theme.
-         For more themes, go to https://github.com/ccampbell/rainbow/tree/master/themes -->
-    <link rel="stylesheet" type="text/css" href="https://rawgithub.com/ccampbell/rainbow/master/themes/github.css">
+    <!--  Scripts-->
+    <script src="../../materialize/js/materialize.min.js"></script>
 
     <!-- libraries -->
     <script type="text/javascript" src="d3/d3.min.js"></script>
@@ -37,11 +29,79 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div class="header yui3-u-1"></div>
-    <div class="content" id="barchart">
+  <nav class="teal lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="../../index.html" class="brand-logo">DP</a>
+      <ul class="right">
+        <li><a href="https://github.com/czhongyu"><i class="material-icons">person</i></a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <nav>
+    <div class="nav-wrapper orange">
+        <div class="container">
+          <div class="col s12">
+            <a href="../../index.html" class="breadcrumb">Home</a>
+            <a class="breadcrumb">Week_4 Barchart</a>
+          </div>
+        </div>
+    </div>
+  </nav>
+
+  <div class="section no-pad-bot" id="index-banner">
+  <div class="container">
+      <div class="card teal lighten-1">
+        <div class="card-content white-text" id="description">
+          <span class="card-title"><i class="material-icons">filter_4</i> Renewable Energy in KTOE (thousand tonne of oil equivalent), 2016</span>
+        </div>
+        <div class="card-action" id="source"></div>
+      </div>
+  </div>
+  </div>
+
+  <div class="container">
+      <div class="section" id="barchart">
         <script>
             readcsv("data.csv");
         </script>
+      </div>
+    <br><br>
+  </div>
+
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Data Processing</h5>
+          <p class="grey-text text-lighten-4">
+              This is the GitHub Page for the assignments of Data Processing (5062DAPR6Y), Semester 1 period 2, 2018/2019.
+          </p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Contact</h5>
+          <ul>
+              <li id="nameandnumber"></li>
+              <li id="email"></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="https://github.com/czhongyu">My GitHub</a></li>
+            <li><a class="white-text" href="https://data.mprog.nl">Data Processing</a></li>
+            <li><a class="white-text" href="http://materializecss.com">Materialize</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
-</body>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="https://github.com/czhongyu">Zhongyu Chen</a>
+          with <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+  </body>
 </html>

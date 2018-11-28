@@ -1,58 +1,129 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
     <title>Data Processing</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-    <!-- Combo with CSSNormalize, CSSGrids-Responsive, CSSForm, CSSTable, CSSList (v3.9.1) -->
-    <link rel="stylesheet" href="css/cssbutton-min.css">
-    <link rel="stylesheet" href="css/cssgrids-responsive-min.css">
-    <link rel="stylesheet" href="css/cssnormalize-min.css">
-    <link rel="stylesheet" href="css/gallerycss-cssform-min.css">
-    <link rel="stylesheet" href="css/gallerycss-csslist-min.css">
-    <link rel="stylesheet" href="css/gallerycss-csstable-min.css">
+    <!-- CSS  -->
+    <link href="materialize/css/icons.css" rel="stylesheet">
+    <link href="materialize/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="materialize/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 
-    <!-- Some custom styles to make things pretty. -->
-    <link rel="stylesheet" type="text/css" href="https://rawgithub.com/tilomitra/prettypages/gh-pages/ui.css">
-
-    <!-- RainbowJS Syntax Highlighting - Github Theme.
-         For more themes, go to https://github.com/ccampbell/rainbow/tree/master/themes -->
-    <link rel="stylesheet" type="text/css" href="https://rawgithub.com/ccampbell/rainbow/master/themes/github.css">
-
-    <!-- Modify header colors here to customize the look and feel of the site-->
-    <style>
-        .header {
-            background: rgb(53, 41, 116);
-        }
-        .header h1 {
-            color: white;
-        }
-        .header h2 {
-            font-weight:300;
-            margin:0;
-            color: rgb(116, 130, 230);
-        }
-    </style>
+    <!--  Scripts-->
+    <script src="materialize/js/materialize.min.js"></script>
 </head>
-
-<body class='yui3-skin-sam'>
-    <div class="header yui3-u-1">
-        <h1 class="yui3-u-1">Data Processing</h1>
-        <h2 class="yui3-u">Zhongyu Chen, 12455822</h2>
+<body>
+  <nav class="teal lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="index.html" class="brand-logo">DP</a>
+      <ul class="right">
+        <li><a href="https://github.com/czhongyu"><i class="material-icons">person</i></a></li>
+      </ul>
     </div>
+  </nav>
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container">
+      <br><br>
+      <h1 class="header center teal-text">Data Processing</h1>
+      <div class="row center">
+        <h5 class="header col s12 light brown-text">Zhongyu Chen, 12455822</h5>
+      </div>
+      <div class="row center">
+        <a class="btn-large waves-effect waves-light teal" id="download-button" href="https://github.com/czhongyu" >My GitHub</a>
+      </div>
+      <br><br>
 
-    <div class="content">
-        <h2>Links to Assignments</h2>
-        <p>Week_3:
-            <a href="Homework/Week_3/temperature.html">JavaScript</a>
-        </p>
-        <p>Week_4:
-            <a href="Homework/Week_4/bar.html">D3 Barchart</a>
-        </p>
-        <p>Week_5:
-            <a href="Homework/Week_5/test.html">D3 Scatterplot</a>
-        </p>
     </div>
-</body>
+  </div>
+
+
+  <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m4">
+
+          <div class="icon-block">
+              <a href="Homework/Week_3/temperature.html">
+                  <h2 class="center brown-text"><i class="material-icons">filter_3</i></h2>
+                  <h5 class="center brown-text">JavaScript</h5>
+              </a>
+              <p class="light">
+                  Line Chart built with pure JavaScript,
+                  using XMLHttpRequest() to get csv data,
+                  with canvas and context for drawing line chart.
+              </p>
+          </div>
+
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+              <a href="Homework/Week_4/bar.html">
+                <h2 class="center brown-text"><i class="material-icons">filter_4</i></h2>
+                <h5 class="center brown-text">D3 Bar Chart</h5>
+              </a>
+            <p class="light">
+                Bar chart built with d3 v5.7.0 library,
+                using csv() to get csv data,
+                with select() and append() for applying text,
+                and svg for drawing bar chart.
+            </p>
+          </div>
+        </div>
+
+        <div class="col s12 m4">
+          <div class="icon-block">
+              <a href="#">
+                <h2 class="center brown-text"><i class="material-icons">filter_5</i></h2>
+                <h5 class="center brown-text">D3 Scatter Plot</h5>
+              </a>
+            <p class="light">
+                Under construction.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <br><br>
+  </div>
+
+  <footer class="page-footer teal">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Data Processing</h5>
+          <p class="grey-text text-lighten-4">
+              This is the GitHub Page for the assignments of Data Processing (5062DAPR6Y), Semester 1 period 2, 2018/2019.
+          </p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Contact</h5>
+          <ul>
+              <li><a class="white-text">Zhongyu Chen, 12455822</a></li>
+              <li><a class="white-text">zhongyuchen@yahoo.com</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><a class="white-text" href="https://github.com/czhongyu">My GitHub</a></li>
+            <li><a class="white-text" href="https://data.mprog.nl">Data Processing</a></li>
+            <li><a class="white-text" href="http://materializecss.com">Materialize</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="https://github.com/czhongyu">Zhongyu Chen</a>
+          with <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+  </body>
 </html>
