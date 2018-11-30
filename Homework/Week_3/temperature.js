@@ -1,3 +1,46 @@
+window.onload = function() {
+    readjson("temperature.json");
+};
+
+function readjson(filename) {
+    // read json file
+
+    let txtFile = new XMLHttpRequest();
+    txtFile.onreadystatechange = function() {
+        if (txtFile.readyState === 4 && txtFile.status == 200) {
+            // parse data
+            data = JSON.parse(txtFile.responseText);
+
+            // preprocess data and save needed data
+            // x and y
+            var time = [];
+            var tg = [];
+            // start date and end date
+            var start_date = new Date("2017/01/01");
+            var end_date = new Date("2017/12/31");
+
+            data.forEach(function(element) {
+                // console.log(element);
+                element["YYYYMMDD"] = new Date(element["YYYYMMDD"].substring(0, 4) + "/" + element["YYYYMMDD"].substring(4, 6) + "/" + element["YYYYMMDD"].substring(6, 8));
+                element["TIME"] = element["YYYYMMDD"].getTime();
+                element["TG"] = parseFloat(element["TG"]) / 10;
+                element["TN"] = parseFloat(element["TN"]) / 10;
+                element["TX"] = parseFloat(element["TX"]) / 10;
+                 if (element["YYYYMMDD"] > start_date && element["YYYYMMDD"] < end_date) {
+                    time.push(element["TIME"]);
+                    tg.push(element["TG"])
+                }
+            });
+            // console.log(time);
+            // console.log(tg);
+
+            linegraph(time, tg, start_date, end_date);
+        }
+    };
+    txtFile.open("GET", filename);
+    txtFile.send();
+}
+
 function linegraph(time, tg, start_date, end_date) {
     // draw line graph
 
@@ -118,4 +161,25 @@ function linegraph(time, tg, start_date, end_date) {
     context.font = '20px arial';
     date = new Date(min[0]);
     context.fillText("(" + date.getDate() + " " + months[date.getMonth()] + ", " + min[1] + ")", x + 10, y);
+}
+
+function createTransform(domain, range) {
+    // transform data values into coordinates on canvas
+
+    // domain is a two-element array of the data bounds [domain_min, domain_max]
+    // range is a two-element array of the screen bounds [range_min, range_max]
+
+    var domain_min = domain[0];
+    var domain_max = domain[1];
+    var range_min = range[0];
+    var range_max = range[1];
+
+    // formulas to calculate the alpha and the beta
+    var alpha = (range_max - range_min) / (domain_max - domain_min);
+    var beta = range_max - alpha * domain_max;
+
+    // returns the function for the linear transformation (y= a * x + b)
+    return function(x){
+        return alpha * x + beta;
+    }
 }
