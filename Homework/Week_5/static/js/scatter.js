@@ -1,3 +1,6 @@
+// Zhongyu Chen, 12455822, zhongyuchen@yahoo.com
+// scatter.js for drawing the scatter plot
+
 window.onload = function() {
     requestdata();
 };
