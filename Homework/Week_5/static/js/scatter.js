@@ -22,10 +22,20 @@ function usedata(response) {
     // transform data into json format
     let womeninscience = transformResponse(response[0]);
     let consconf = transformResponse(response[1]);
-    console.log(womeninscience);
-    console.log(consconf);
+    var count = 0;
 
-    scatterplot(womeninscience);
+    scatterplot(womeninscience, "Headcount of Women Researchers in 6 Countries", "Headcount of Women Researchers");
+    document.getElementById('click').onclick = function switchdataset() {
+        d3.selectAll('svg').remove();
+        count = (count + 1) % 2;
+        if (count) {
+            scatterplot(consconf, "Consumer confidence in 6 Countries", "Consumer confidence");
+        }
+        else {
+            scatterplot(womeninscience, "Headcount of Women Researchers in 6 Countries", "Headcount of Women Researchers");
+        }
+
+    }
 }
 
 function transformResponse(data){
@@ -100,7 +110,7 @@ function create_slider(id) {
     return slider;
 }
 
-function scatterplot(dataset0) {
+function scatterplot(dataset0, title, yAxistext) {
     // draw scatter plot
     // var slider = create_slider('slider');
 
@@ -180,7 +190,7 @@ function scatterplot(dataset0) {
       .attr("dy", "1em")
       .style("text-anchor", "middle")
           .style("font-size", "20px")
-      .text("Headcount of Women Researchers");
+      .text(yAxistext);
 
       // title
       svg.append("text")
@@ -188,7 +198,7 @@ function scatterplot(dataset0) {
         .attr("y",  -margin.top/2)
         .attr("text-anchor", "middle")
         .style("font-size", "25px")
-        .text("Headcount of Women Researchers in 6 countries");
+        .text(title);
 
     // draw dots
   svg.selectAll(".dot")
