@@ -12,12 +12,16 @@
     <link href="../../static/css/icons.css" rel="stylesheet">
     <link href="../../static/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="../../static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+    <link href="../../static/css/nouislider.min.css" type="text/css" rel="stylesheet">
 
     <!--  Scripts-->
     <script src="../../static/js/materialize.min.js"></script>
+    <script src="../../static/js/nouislider.min.js"></script>
+    <!--<script src="../../static/js/wNumb.js"></script>-->
 
     <!-- d3 library -->
     <script type="text/javascript" src="static/js/d3.min.js"></script>
+    <script type="text/javascript" src="static/js/d3-tip.js"></script>
 
     <!-- my js code for drawing the scatter plot -->
     <script type="text/javascript" src="static/js/scatter.js"></script>
@@ -47,7 +51,7 @@
 
   <div class="section no-pad-bot" id="index-banner">
   <div class="container">
-      <div class="card teal lighten-1">
+      <div class="card teal lighten-1 hoverable">
         <div class="card-content white-text" id="description">
           <span class="card-title"><i class="material-icons">filter_5</i> Scatterplot Full Title</span>
             <p>
@@ -55,7 +59,8 @@
             </p>
         </div>
         <div class="card-action">
-          <a href="#">Data Source</a>
+            <a href="http://stats.oecd.org/SDMX-JSON/data/MSTI_PUB/TH_WRXRS.FRA+DEU+KOR+NLD+PRT+GBR/all?startTime=2007&endTime=2015">Women in Science</a>
+            <a href="http://stats.oecd.org/SDMX-JSON/data/HH_DASH/FRA+DEU+KOR+NLD+PRT+GBR.COCONF.A/all?startTime=2007&endTime=2015">Consumer Confidence</a>
         </div>
       </div>
   </div>
@@ -63,6 +68,7 @@
 
   <div class="container">
       <div class="section" id="scatterplot"></div>
+      <div id="slider"></div>
     <br><br>
   </div>
 
