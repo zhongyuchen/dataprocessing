@@ -12,12 +12,13 @@
     <link href="../../static/css/icons.css" rel="stylesheet">
     <link href="../../static/css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <link href="../../static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-    <link href="../../static/css/nouislider.min.css" type="text/css" rel="stylesheet">
+    <link href="../../static/css/nouislider.css" type="text/css" rel="stylesheet">
 
     <!--  Scripts-->
     <script src="../../static/js/materialize.min.js"></script>
-    <script src="../../static/js/nouislider.min.js"></script>
-    <!--<script src="../../static/js/wNumb.js"></script>-->
+    <script src="../../static/js/nouislider.js"></script>
+    <script src="../../static/js/wNumb.js"></script>
+    <script src="../../static/js/jquery-3.3.1.min.js"></script>
 
     <!-- d3 library -->
     <script type="text/javascript" src="static/js/d3.min.js"></script>
@@ -69,8 +70,24 @@
   <div class="container">
       <div class="section" id="scatterplot"></div>
       <div id="slider"></div>
+            <form action="#">
+        <p>
+          <label>
+            <input name="group1" type="radio" value="0" checked />
+            <span>dataset1</span>
+          </label>
+        </p>
+        <p>
+          <label>
+            <input name="group1" type="radio" value="1"/>
+            <span>dataset2</span>
+          </label>
+        </p>
+      </form>
     <br><br>
   </div>
+
+
 
   <footer class="page-footer teal">
     <div class="container">

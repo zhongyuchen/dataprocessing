@@ -22,8 +22,7 @@ function usedata(response) {
     console.log(womeninscience);
     console.log(consconf);
 
-    scatterplot(womeninscience, womeninscience["MSTI Variables"],
-                consconf, consconf["Indicator"]);
+    scatterplot(womeninscience);
 }
 
 function transformResponse(data){
@@ -82,24 +81,31 @@ function transformResponse(data){
     return dataArray;
 }
 
-function scatterplot(dataset0, title0, dataset1, title1) {
+function create_slider(id) {
+    var slider = document.getElementById(id);
+
+    noUiSlider.create(slider, {
+        start: [2007, 2015],
+        connect: true,
+        step: 1,
+        tooltips: [wNumb({decimals: 0}),wNumb({decimals: 0})],
+        range: {
+            'min': 2007,
+            'max': 2015
+        }
+    });
+    return slider;
+}
+
+function scatterplot(dataset0) {
     // draw scatter plot
-    // var slider = document.getElementById('slider');
-    //
-    // noUiSlider.create(slider, {
-    //     start: [2007, 2015],
-    //     connect: true,
-    //     range: {
-    //         'min': 2007,
-    //         'max': 2015
-    //     }
-    // });
+    // var slider = create_slider('slider');
 
     // graph specs
-    var full_width = document.getElementById('scatterplot').clientWidth;
-    var full_height = full_width / 1.6;
+    var full_width = 1000;
+    var full_height = 625;
 
-    var margin = {top: 20, right: 20, bottom: 30, left: 40};
+    var margin = {top: 50, right: 150, bottom: 55, left: 70};
     var width = full_width - margin.left - margin.right;
     var height = full_height - margin.top - margin.bottom;
 
@@ -107,7 +113,7 @@ function scatterplot(dataset0, title0, dataset1, title1) {
     var xValue = function(d) { return d.time;},
         xScale = d3.scaleLinear()
             .domain([d3.min(dataset0, xValue),
-                d3.max(dataset0, function(d) { return d.time; })])
+                d3.max(dataset0, xValue)])
             .range([0, width]),
         xMap = function(d) { return xScale(xValue(d));},
         xAxis = d3.axisBottom(xScale);
@@ -115,8 +121,8 @@ function scatterplot(dataset0, title0, dataset1, title1) {
     // setup y
     var yValue = function(d) { return d.datapoint;},
         yScale = d3.scaleLinear()
-            .domain([d3.min(dataset0, function(d) { return d.datapoint; }),
-                d3.max(dataset0, function(d) { return d.datapoint; })])
+            .domain([d3.min(dataset0, yValue),
+                d3.max(dataset0, yValue)])
             .range([height, 0]),
         yMap = function(d) { return yScale(yValue(d));},
         yAxis = d3.axisLeft(yScale);
@@ -140,7 +146,8 @@ function scatterplot(dataset0, title0, dataset1, title1) {
         .attr('class', 'd3-tip')
         .offset([-10, 0])
         .html(function(d) {
-            return "<span style='color:red'>" + d.time + "</span> <strong>d.datapoint</strong> <strong>d.Country</strong>";
+            return "<span style='color:red'>" + d.Country + "</span><br>"+
+                "<strong>(" + d.time+", "+d.datapoint+")"+"</strong>";
         });
 
     // invoke the tip in the context of the visualization
@@ -149,17 +156,19 @@ function scatterplot(dataset0, title0, dataset1, title1) {
     // x-axis
     xAxis.tickFormat(function(d) { return d.toString()});
   svg.append("g")
-      .attr("class", "axis")
-      .attr("transform", "translate(0," + height + ")")
+      .attr("class", "xaxis")
+      .attr("transform", "translate(0," + (height + margin.bottom / 3) + ")")
       .call(xAxis);
   svg.append("text")
-      .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 10) + ")")
+      .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + margin.bottom / 12) + ")")
       .style("text-anchor", "middle")
+      .style("font-size", "20px")
       .text("Year");
 
   // y-axis
   svg.append("g")
-      .attr("class", "axis")
+      .attr("class", "yaxis")
+      .attr("transform", "translate(" +  (- margin.left / 3) + ",0)")
       .call(yAxis);
       svg.append("text")
       .attr("transform", "rotate(-90)")
@@ -167,23 +176,31 @@ function scatterplot(dataset0, title0, dataset1, title1) {
       .attr("x",0 - (height / 2))
       .attr("dy", "1em")
       .style("text-anchor", "middle")
-      .text("Women researchers as a percentage of total researchers (headcount)");
+          .style("font-size", "20px")
+      .text("Headcount of Women Researchers");
 
+      // title
+      svg.append("text")
+        .attr("x", width / 2)
+        .attr("y",  -margin.top/2)
+        .attr("text-anchor", "middle")
+        .style("font-size", "25px")
+        .text("Headcount of Women Researchers in 6 countries");
 
     // draw dots
   svg.selectAll(".dot")
       .data(dataset0)
     .enter().append("circle")
       .attr("class", "dot")
-      .attr("r", 3.5)
+      .attr("r", 7)
       .attr("cx", xMap)
       .attr("cy", yMap)
-      .style("fill", function(d) { return color(cValue(d));})
+      .style("fill", function(d) { return color(d);})
       .on("mouseover", tip.show)
       .on("mouseout", tip.hide);
 
     // draw legend colored circles
-    var cx = width - 50;
+    var cx = full_width - 190;
     var cy = margin.top;
     var r = 7;
     var gap = {"vertical": 20, "horizontal": 15};
@@ -203,4 +220,41 @@ function scatterplot(dataset0, title0, dataset1, title1) {
       .attr("y", cy + r / 2 + i * gap.vertical)
       .text(key);
     }
+
+    // var range = {"low": 2007, "high": 2015};
+    // slider.noUiSlider.on('update', function (values, handle) {
+    //     // update new time range
+    //          range.low = parseInt(values[0]);
+    //     range.high = parseInt(values[1]);
+    //     var newdataset0 ={};
+    //     for (var key in dataset0) {
+    //         if (dataset0[key].time >= range.low && dataset0[key].time <= range.high) {
+    //             newdataset0[key] = dataset0[key];
+    //         }
+    //     }
+    //
+    //     // update new x and y scale
+    //     xScale.domain([d3.min(newdataset0, xValue),
+    //             d3.max(newdataset0, xValue)])
+    //         .range([0, width]);
+    //     yScale.domain([d3.min(newdataset0, yValue),
+    //             d3.max(dataset0, yValue)])
+    //         .range([height, 0]);
+    //
+    //             xAxis.scale(xScale);
+    //
+    //     yAxis.scale(yScale);
+    //
+    //             svg.select("xaxis")
+    //        .transition()
+    //        .duration(1000)
+    //        .ease("circle")
+    //        .call(xAxis);
+    //
+    //     svg.select("yaxis")
+    //        .transition()
+    //        .duration(1000)
+    //        .ease("circle")
+    //        .call(yAxis);
+    // });
 }

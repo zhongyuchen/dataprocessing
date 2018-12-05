@@ -27,3 +27,10 @@
   top: 100%;
   left: 0;
 }
+
+.noUi-tooltip {
+    display: none;
+}
+.noUi-active .noUi-tooltip {
+    display: block;
+}
