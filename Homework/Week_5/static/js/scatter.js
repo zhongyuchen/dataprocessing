@@ -181,7 +181,7 @@ function scatterplot(dataset0, title, yAxistext) {
   // y-axis
   svg.append("g")
       .attr("class", "yaxis")
-      .attr("transform", "translate(" +  (- margin.left / 3) + ",0)")
+      .attr("transform", "translate(" +  (- margin.left / 5) + ",0)")
       .call(yAxis);
       svg.append("text")
       .attr("transform", "rotate(-90)")
