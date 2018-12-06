@@ -411,11 +411,18 @@ function scatterplot(dataset0, title, yAxistext) {
                     .text("x = " + x1);
             }
             else {
+                let astring = "";
+                if (a >= 0) {
+                    astring = "+" + a.toFixed(2);
+                }
+                else {
+                    astring = a.toFixed(2);
+                }
                 svg.append("text")
                     .attr("x", x)
                     .attr("y", y)
                     .attr("stroke", "red")
-                    .text("y = " + b.toFixed(2) + "x " + a.toFixed(2));
+                    .text("y = " + b.toFixed(2) + "x" + astring);
             }
         }
     }
