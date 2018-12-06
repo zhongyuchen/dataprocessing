@@ -392,7 +392,7 @@ function scatterplot(dataset0, title, yAxistext) {
             }
 
             // regression line
-            var line = svg.append("line")
+            svg.append("line")
                 .attr("x1", xScale(x1))
                 .attr("y1", yScale(y1))
                 .attr("x2", xScale(x2))
