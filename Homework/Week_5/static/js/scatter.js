@@ -1,6 +1,11 @@
 // Zhongyu Chen, 12455822, zhongyuchen@yahoo.com
 // scatter.js for drawing the scatter plot
 
+// global variable
+var countrycolor = {"France": '#8c510a', "Germany": '#d8b365',
+            "Korea": '#f6e8c3', "Netherlands": '#c7eae5',
+            "Portugal": '#5ab4ac', "United Kingdom": '#01665e'};
+
 window.onload = function() {
     requestdata();
 };
@@ -28,9 +33,66 @@ function usedata(response) {
     // original plot
     scatterplot(womeninscience, "Headcount of Women Researchers in 6 Countries", "Headcount of Women Researchers");
 
+    // checkboxes
+    var checkbox = {};
+    for (let key in countrycolor) {
+        checkbox[key] = 1;
+    }
+    var updatecheckbox = function (country) {
+            // remove former plot
+            d3.selectAll('svg').remove();
+
+            // update checkbox value
+            checkbox[country] = (checkbox[country] + 1) % 2;
+
+            // update plot
+            if (checkbox[country]) {
+                for (let i = 0, length = consconf.length; i < length; i++) {
+                    if (consconf[i].Country === country) {
+                        newcc.push(consconf[i]);
+                    }
+                }
+                for (let i = 0, length = womeninscience.length; i < length; i++) {
+                    if (womeninscience[i].Country === country) {
+                        newwis.push(womeninscience[i]);
+                    }
+                }
+            }
+            else {
+                let tempcc = [];
+                let tempwis = [];
+                for (let i = 0, length = newcc.length; i < length; i++) {
+                    if (newcc[i].Country !== country) {
+                        tempcc.push(newcc[i]);
+                    }
+                }
+                for (let i = 0, length = newwis.length; i < length; i++) {
+                    if (newwis[i].Country !== country) {
+                        tempwis.push(newwis[i]);
+                    }
+                }
+                newcc = tempcc;
+                newwis = tempwis;
+            }
+
+            // draw plot
+            if (count) {
+                scatterplot(newcc, "Consumer confidence in 6 Countries", "Consumer confidence");
+            }
+            else {
+                scatterplot(newwis, "Headcount of Women Researchers in 6 Countries", "Headcount of Women Researchers");
+            }
+        };
+    for (let key in countrycolor) {
+        document.getElementById(key).onclick = function clickcheckbox() {
+            updatecheckbox(key);
+        };
+    }
+
+
     // switch dataset
     var count = 0;
-    document.getElementById('click').onclick = function switchdataset() {
+    document.getElementById('switchdataset').onclick = function switchdataset() {
         d3.selectAll('svg').remove();
         count = (count + 1) % 2;
         if (count) {
@@ -163,7 +225,8 @@ function scatterplot(dataset0, title, yAxistext) {
             .range([0, width]),
         xMap = function(d) { return xScale(xValue(d));},
         xAxis = d3.axisBottom(xScale);
-    xAxis.ticks(d3.max(dataset0, xValue) - d3.min(dataset0, xValue));
+    var tickcnt = (d3.max(dataset0, xValue) === d3.min(dataset0, xValue))? 1: (d3.max(dataset0, xValue) - d3.min(dataset0, xValue));
+    xAxis.ticks(tickcnt);
 
     // setup y
     var yValue = function(d) { return d.datapoint;},
@@ -176,9 +239,6 @@ function scatterplot(dataset0, title, yAxistext) {
 
     // setup fill color
     var cValue = function(d) { return d.Country;},
-        countrycolor = {"France": '#8c510a', "Germany": '#d8b365',
-            "Korea": '#f6e8c3', "Netherlands": '#c7eae5',
-            "Portugal": '#5ab4ac', "United Kingdom": '#01665e'},
         color = function(d) { return countrycolor[cValue(d)]; };
 
     // add the graph canvas to the body of the webpage

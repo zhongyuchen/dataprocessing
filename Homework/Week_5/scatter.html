@@ -72,11 +72,56 @@
   <div class="container">
       <div class="section" id="scatterplot"></div>
       <div class="row">
-          <div class="col s3">
-            <button class="btn waves-effect waves-light pulse" type="submit" id="click" onclick="switchdataset();">Switch Dateset</button>
+          <div class="col s4">
+                <form action="#">
+        <div class="col s5">
+            <p>
+          <label>
+            <input type="checkbox" id="France" checked="checked" onclick="clickcheckbox()"/>
+            <span>France</span>
+          </label>
+                </p>
+            <p>
+          <label>
+            <input type="checkbox" id="Germany" checked="checked" onclick="clickcheckbox()"/>
+            <span>Germany</span>
+          </label>
+                </p>
+            <p>
+            <label>
+            <input type="checkbox" id="Korea" checked="checked" onclick="clickcheckbox()"/>
+            <span>Korea</span>
+          </label>
+            </p>
+        </div>
+        <div class="col s7">
+            <p>
+          <label>
+            <input type="checkbox" id="Netherlands" checked="checked" onclick="clickcheckbox()"/>
+            <span>Netherlands</span>
+          </label>
+                </p>
+            <p>
+          <label>
+            <input type="checkbox" id="Portugal" checked="checked" onclick="clickcheckbox()"/>
+            <span>Portugal</span>
+          </label>
+                </p>
+            <p>
+            <label>
+            <input type="checkbox" id="United Kingdom" checked="checked" onclick="clickcheckbox()"/>
+            <span>United Kingdom</span>
+          </label>
+            </p>
+        </div>
+      </form>
+              </div>
+          <div class="col s2">
+              <br><br>
+            <button class="btn waves-effect waves-light pulse" type="submit" id="switchdataset" onclick="switchdataset()">Switch Dateset</button>
           </div>
-          <div class="col s9">
-              <br>
+          <div class="col s5 offset-s1">
+              <br><br><br>
             <div id="year-slider"></div>
           </div>
       </div>
