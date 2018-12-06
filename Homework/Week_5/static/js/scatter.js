@@ -41,59 +41,59 @@ function usedata(response) {
         countrycolor[key] = full_countrycolor[key];
     }
     var updatecheckbox = function (country) {
-            // remove former plot
-            d3.selectAll('svg').remove();
+        // remove former plot
+        d3.selectAll('svg').remove();
 
-            // update checkbox value
-            if (countrycolor.hasOwnProperty(country)) {
-                delete countrycolor[country];
-            }
-            else {
-                countrycolor[country] = full_countrycolor[country];
-            }
+        // update checkbox value
+        if (countrycolor.hasOwnProperty(country)) {
+            delete countrycolor[country];
+        }
+        else {
+            countrycolor[country] = full_countrycolor[country];
+        }
 
-            // update plot
-            if (countrycolor.hasOwnProperty(country)) {
-                for (let i = 0, length = consconf.length; i < length; i++) {
-                    if (consconf[i].time >= range.low && consconf[i].time <= range.high &&
-                        consconf[i].Country === country) {
-                        newcc.push(consconf[i]);
-                    }
-                }
-                for (let i = 0, length = womeninscience.length; i < length; i++) {
-                    if (womeninscience[i].time >= range.low && womeninscience[i].time <= range.high &&
-                        womeninscience[i].Country === country) {
-                        newwis.push(womeninscience[i]);
-                    }
+        // update plot
+        if (countrycolor.hasOwnProperty(country)) {
+            for (let i = 0, length = consconf.length; i < length; i++) {
+                if (consconf[i].time >= range.low && consconf[i].time <= range.high &&
+                    consconf[i].Country === country) {
+                    newcc.push(consconf[i]);
                 }
             }
-            else {
-                let tempcc = [];
-                let tempwis = [];
-                for (let i = 0, length = newcc.length; i < length; i++) {
-                    if (newcc[i].time >= range.low && newcc[i].time <= range.high &&
-                        newcc[i].Country !== country) {
-                        tempcc.push(newcc[i]);
-                    }
+            for (let i = 0, length = womeninscience.length; i < length; i++) {
+                if (womeninscience[i].time >= range.low && womeninscience[i].time <= range.high &&
+                    womeninscience[i].Country === country) {
+                    newwis.push(womeninscience[i]);
                 }
-                for (let i = 0, length = newwis.length; i < length; i++) {
-                    if (newwis[i].time >= range.low && newwis[i].time <= range.high &&
-                        newwis[i].Country !== country) {
-                        tempwis.push(newwis[i]);
-                    }
-                }
-                newcc = tempcc;
-                newwis = tempwis;
             }
+        }
+        else {
+            let tempcc = [];
+            let tempwis = [];
+            for (let i = 0, length = newcc.length; i < length; i++) {
+                if (newcc[i].time >= range.low && newcc[i].time <= range.high &&
+                    newcc[i].Country !== country) {
+                    tempcc.push(newcc[i]);
+                }
+            }
+            for (let i = 0, length = newwis.length; i < length; i++) {
+                if (newwis[i].time >= range.low && newwis[i].time <= range.high &&
+                    newwis[i].Country !== country) {
+                    tempwis.push(newwis[i]);
+                }
+            }
+            newcc = tempcc;
+            newwis = tempwis;
+        }
 
-            // draw plot
-            if (count) {
-                scatterplot(newcc, "Consumer confidence in 6 Countries", "Consumer confidence");
-            }
-            else {
-                scatterplot(newwis, "Headcount of Women Researchers in 6 Countries", "Headcount of Women Researchers");
-            }
-        };
+        // draw plot
+        if (count) {
+            scatterplot(newcc, "Consumer confidence in 6 Countries", "Consumer confidence");
+        }
+        else {
+            scatterplot(newwis, "Headcount of Women Researchers in 6 Countries", "Headcount of Women Researchers");
+        }
+    };
     for (let key in full_countrycolor) {
         document.getElementById(key).onclick = function clickcheckbox() {
             updatecheckbox(key);
@@ -357,30 +357,39 @@ function scatterplot(dataset0, title, yAxistext) {
     var size = dataset0.length;
     var x1 = d3.min(dataset0, xValue);
     var x2 = d3.max(dataset0, xValue);
-    if (size && x1 !== x2) {
+    if (size) {
         // unclock
         d3.selectAll("#regression").attr("disabled", null);
 
         // regression
         if (regression) {
-            // regression specs
-            var time_mean = 0.0;
-            var data_mean = 0.0;
+            // get y1 and y2
+            if (x1 == x2) {
+                // vertical
+                var y1 = d3.min(dataset0, yValue);
+                var y2 = d3.max(dataset0, yValue);
+            }
+            else {
+                // non-vertical
+                // regression specs
+                var time_mean = 0.0;
+                var data_mean = 0.0;
 
-            var product = 0.0;
-            var square = 0.0;
-            dataset0.forEach(function(d) {
-                time_mean += parseFloat(d.time);
-                data_mean += parseFloat(d.datapoint);
-                product += parseFloat(d.time) * parseFloat(d.datapoint);
-                square += parseFloat(d.time) * parseFloat(d.time);
-            });
-            time_mean /= size;
-            data_mean /= size;
-            var b = (product - size * time_mean * data_mean) / (square - size * time_mean * time_mean);
-            var a = data_mean - b * time_mean;
-            var y1 = b * x1 + a;
-            var y2 = b * x2 + a;
+                var product = 0.0;
+                var square = 0.0;
+                dataset0.forEach(function(d) {
+                    time_mean += parseFloat(d.time);
+                    data_mean += parseFloat(d.datapoint);
+                    product += parseFloat(d.time) * parseFloat(d.datapoint);
+                    square += parseFloat(d.time) * parseFloat(d.time);
+                });
+                time_mean /= size;
+                data_mean /= size;
+                var b = (product - size * time_mean * data_mean) / (square - size * time_mean * time_mean);
+                var a = data_mean - b * time_mean;
+                var y1 = b * x1 + a;
+                var y2 = b * x2 + a;
+            }
 
             // regression line
             svg.append("line")
@@ -393,11 +402,7 @@ function scatterplot(dataset0, title, yAxistext) {
         }
     }
     else {
-        // switch off and locked
-        if (regression) {
-            d3.selectAll("#regression").attr("checked", null);
-            regression = 0;
-        }
+        // locked
         d3.selectAll("#regression").attr("disabled", "disabled");
     }
 }
