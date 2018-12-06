@@ -22,20 +22,54 @@ function usedata(response) {
     // transform data into json format
     let womeninscience = transformResponse(response[0]);
     let consconf = transformResponse(response[1]);
-    var count = 0;
+    let newwis = womeninscience;
+    let newcc = consconf;
 
+    // original plot
     scatterplot(womeninscience, "Headcount of Women Researchers in 6 Countries", "Headcount of Women Researchers");
+
+    // switch dataset
+    var count = 0;
     document.getElementById('click').onclick = function switchdataset() {
         d3.selectAll('svg').remove();
         count = (count + 1) % 2;
         if (count) {
-            scatterplot(consconf, "Consumer confidence in 6 Countries", "Consumer confidence");
+            scatterplot(newcc, "Consumer confidence in 6 Countries", "Consumer confidence");
         }
         else {
-            scatterplot(womeninscience, "Headcount of Women Researchers in 6 Countries", "Headcount of Women Researchers");
+            scatterplot(newwis, "Headcount of Women Researchers in 6 Countries", "Headcount of Women Researchers");
+        }
+    };
+
+    // update range
+    var slider = create_slider('year-slider');
+    slider.noUiSlider.on('update', function (values, handle) {
+        // update new time range
+        let range = {"low": parseInt(values[0]), "high": parseInt(values[1])};
+
+        // update dateset
+        newwis = [];
+        newcc = [];
+        for (let key in womeninscience) {
+            if (womeninscience[key].time >= range.low && womeninscience[key].time <= range.high) {
+                newwis.push(womeninscience[key]);
+            }
+        }
+        for (let key in consconf) {
+            if (consconf[key].time >= range.low && consconf[key].time <= range.high) {
+                newcc.push(consconf[key]);
+            }
         }
 
-    }
+        // update plot
+        d3.selectAll('svg').remove();
+        if (count) {
+            scatterplot(newcc, "Consumer confidence in 6 Countries", "Consumer confidence");
+        }
+        else {
+            scatterplot(newwis, "Headcount of Women Researchers in 6 Countries", "Headcount of Women Researchers");
+        }
+    });
 }
 
 function transformResponse(data){
@@ -112,7 +146,6 @@ function create_slider(id) {
 
 function scatterplot(dataset0, title, yAxistext) {
     // draw scatter plot
-    // var slider = create_slider('slider');
 
     // graph specs
     var full_width = 1000;
@@ -130,6 +163,7 @@ function scatterplot(dataset0, title, yAxistext) {
             .range([0, width]),
         xMap = function(d) { return xScale(xValue(d));},
         xAxis = d3.axisBottom(xScale);
+    xAxis.ticks(d3.max(dataset0, xValue) - d3.min(dataset0, xValue));
 
     // setup y
     var yValue = function(d) { return d.datapoint;},
@@ -233,41 +267,4 @@ function scatterplot(dataset0, title, yAxistext) {
       .attr("y", cy + r / 2 + i * gap.vertical)
       .text(key);
     }
-
-    // var range = {"low": 2007, "high": 2015};
-    // slider.noUiSlider.on('update', function (values, handle) {
-    //     // update new time range
-    //          range.low = parseInt(values[0]);
-    //     range.high = parseInt(values[1]);
-    //     var newdataset0 ={};
-    //     for (var key in dataset0) {
-    //         if (dataset0[key].time >= range.low && dataset0[key].time <= range.high) {
-    //             newdataset0[key] = dataset0[key];
-    //         }
-    //     }
-    //
-    //     // update new x and y scale
-    //     xScale.domain([d3.min(newdataset0, xValue),
-    //             d3.max(newdataset0, xValue)])
-    //         .range([0, width]);
-    //     yScale.domain([d3.min(newdataset0, yValue),
-    //             d3.max(dataset0, yValue)])
-    //         .range([height, 0]);
-    //
-    //             xAxis.scale(xScale);
-    //
-    //     yAxis.scale(yScale);
-    //
-    //             svg.select("xaxis")
-    //        .transition()
-    //        .duration(1000)
-    //        .ease("circle")
-    //        .call(xAxis);
-    //
-    //     svg.select("yaxis")
-    //        .transition()
-    //        .duration(1000)
-    //        .ease("circle")
-    //        .call(yAxis);
-    // });
 }

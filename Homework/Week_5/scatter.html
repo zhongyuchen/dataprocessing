@@ -69,22 +69,15 @@
 
   <div class="container">
       <div class="section" id="scatterplot"></div>
-      <!--<div id="slider"></div>-->
-            <!--<form action="#">-->
-        <!--<p>-->
-          <!--<label>-->
-            <!--<input name="group1" type="radio" value="0" checked />-->
-            <!--<span>dataset1</span>-->
-          <!--</label>-->
-        <!--</p>-->
-        <!--<p>-->
-          <!--<label>-->
-            <!--<input name="group1" type="radio" value="1"/>-->
-            <!--<span>dataset2</span>-->
-          <!--</label>-->
-        <!--</p>-->
-      <!--</form>-->
-        <button class="btn waves-effect waves-light pulse" type="submit" id="click" onclick="switchdataset();">Switch Dateset</button>
+      <div class="row">
+          <div class="col s3">
+            <button class="btn waves-effect waves-light pulse" type="submit" id="click" onclick="switchdataset();">Switch Dateset</button>
+          </div>
+          <div class="col s9">
+              <br>
+            <div id="year-slider"></div>
+          </div>
+      </div>
     <br><br>
   </div>
 
