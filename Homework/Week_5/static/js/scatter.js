@@ -8,7 +8,6 @@ var full_countrycolor = {"France": '#8c510a', "Germany": '#d8b365',
 var countrycolor = {};
 var range = {"low": 2007, "high": 2015};
 var regression = 1;
-var disabled = 0;
 
 window.onload = function() {
     requestdata();
@@ -360,10 +359,7 @@ function scatterplot(dataset0, title, yAxistext) {
     var x2 = d3.max(dataset0, xValue);
     if (size && x1 !== x2) {
         // unclock
-        if (disabled) {
-            d3.selectAll("#regression").attr("disabled", null);
-            disabled = 0;
-        }
+        d3.selectAll("#regression").attr("disabled", null);
 
         // regression
         if (regression) {
@@ -398,9 +394,10 @@ function scatterplot(dataset0, title, yAxistext) {
     }
     else {
         // switch off and locked
-        d3.selectAll("#regression")
-            .attr("checked", null).attr("disabled", "disabled");
-        regression = 0;
-        disabled = 1;
+        if (regression) {
+            d3.selectAll("#regression").attr("checked", null);
+            regression = 0;
+        }
+        d3.selectAll("#regression").attr("disabled", "disabled");
     }
 }
