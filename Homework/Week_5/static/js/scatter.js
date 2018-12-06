@@ -8,6 +8,7 @@ var full_countrycolor = {"France": '#8c510a', "Germany": '#d8b365',
 var countrycolor = {};
 var range = {"low": 2007, "high": 2015};
 var regression = 1;
+var disabled = 0;
 
 window.onload = function() {
     requestdata();
@@ -354,35 +355,52 @@ function scatterplot(dataset0, title, yAxistext) {
     }
 
     // regression
-    if (regression) {
-        // regression specs
-        var time_mean = 0.0;
-        var data_mean = 0.0;
-        var size = dataset0.length;
-        var product = 0.0;
-        var square = 0.0;
-        dataset0.forEach(function(d) {
-            time_mean += parseFloat(d.time);
-            data_mean += parseFloat(d.datapoint);
-            product += parseFloat(d.time) * parseFloat(d.datapoint);
-            square += parseFloat(d.time) * parseFloat(d.time);
-        });
-        time_mean /= size;
-        data_mean /= size;
-        var b = (product - size * time_mean * data_mean) / (square - size * time_mean * time_mean);
-        var a = data_mean - b * time_mean;
-        var x1 = d3.min(dataset0, xValue);
-        var x2 = d3.max(dataset0, xValue);
-        var y1 = b * x1 + a;
-        var y2 = b * x2 + a;
+    var size = dataset0.length;
+    var x1 = d3.min(dataset0, xValue);
+    var x2 = d3.max(dataset0, xValue);
+    if (size && x1 !== x2) {
+        // unclock
+        if (disabled) {
+            d3.selectAll("#regression").attr("disabled", null);
+            disabled = 0;
+        }
 
-        // regression line
-        svg.append("line")
-            .attr("x1", xScale(x1))
-            .attr("y1", yScale(y1))
-            .attr("x2", xScale(x2))
-            .attr("y2", yScale(y2))
-            .attr("stroke","red")
-            .attr("stroke-width",3);
+        // regression
+        if (regression) {
+            // regression specs
+            var time_mean = 0.0;
+            var data_mean = 0.0;
+
+            var product = 0.0;
+            var square = 0.0;
+            dataset0.forEach(function(d) {
+                time_mean += parseFloat(d.time);
+                data_mean += parseFloat(d.datapoint);
+                product += parseFloat(d.time) * parseFloat(d.datapoint);
+                square += parseFloat(d.time) * parseFloat(d.time);
+            });
+            time_mean /= size;
+            data_mean /= size;
+            var b = (product - size * time_mean * data_mean) / (square - size * time_mean * time_mean);
+            var a = data_mean - b * time_mean;
+            var y1 = b * x1 + a;
+            var y2 = b * x2 + a;
+
+            // regression line
+            svg.append("line")
+                .attr("x1", xScale(x1))
+                .attr("y1", yScale(y1))
+                .attr("x2", xScale(x2))
+                .attr("y2", yScale(y2))
+                .attr("stroke","red")
+                .attr("stroke-width",3);
+        }
+    }
+    else {
+        // switch off and locked
+        d3.selectAll("#regression")
+            .attr("checked", null).attr("disabled", "disabled");
+        regression = 0;
+        disabled = 1;
     }
 }
