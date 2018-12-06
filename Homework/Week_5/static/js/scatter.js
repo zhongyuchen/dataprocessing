@@ -2,9 +2,11 @@
 // scatter.js for drawing the scatter plot
 
 // global variable
-var countrycolor = {"France": '#8c510a', "Germany": '#d8b365',
+var full_countrycolor = {"France": '#8c510a', "Germany": '#d8b365',
             "Korea": '#f6e8c3', "Netherlands": '#c7eae5',
             "Portugal": '#5ab4ac', "United Kingdom": '#01665e'};
+var countrycolor = {};
+var range = {"low": 2007, "high": 2015};
 
 window.onload = function() {
     requestdata();
@@ -34,26 +36,32 @@ function usedata(response) {
     scatterplot(womeninscience, "Headcount of Women Researchers in 6 Countries", "Headcount of Women Researchers");
 
     // checkboxes
-    var checkbox = {};
-    for (let key in countrycolor) {
-        checkbox[key] = 1;
+    for (let key in full_countrycolor) {
+        countrycolor[key] = full_countrycolor[key];
     }
     var updatecheckbox = function (country) {
             // remove former plot
             d3.selectAll('svg').remove();
 
             // update checkbox value
-            checkbox[country] = (checkbox[country] + 1) % 2;
+            if (countrycolor.hasOwnProperty(country)) {
+                delete countrycolor[country];
+            }
+            else {
+                countrycolor[country] = full_countrycolor[country];
+            }
 
             // update plot
-            if (checkbox[country]) {
+            if (countrycolor.hasOwnProperty(country)) {
                 for (let i = 0, length = consconf.length; i < length; i++) {
-                    if (consconf[i].Country === country) {
+                    if (consconf[i].time >= range.low && consconf[i].time <= range.high &&
+                        consconf[i].Country === country) {
                         newcc.push(consconf[i]);
                     }
                 }
                 for (let i = 0, length = womeninscience.length; i < length; i++) {
-                    if (womeninscience[i].Country === country) {
+                    if (womeninscience[i].time >= range.low && womeninscience[i].time <= range.high &&
+                        womeninscience[i].Country === country) {
                         newwis.push(womeninscience[i]);
                     }
                 }
@@ -62,12 +70,14 @@ function usedata(response) {
                 let tempcc = [];
                 let tempwis = [];
                 for (let i = 0, length = newcc.length; i < length; i++) {
-                    if (newcc[i].Country !== country) {
+                    if (newcc[i].time >= range.low && newcc[i].time <= range.high &&
+                        newcc[i].Country !== country) {
                         tempcc.push(newcc[i]);
                     }
                 }
                 for (let i = 0, length = newwis.length; i < length; i++) {
-                    if (newwis[i].Country !== country) {
+                    if (newwis[i].time >= range.low && newwis[i].time <= range.high &&
+                        newwis[i].Country !== country) {
                         tempwis.push(newwis[i]);
                     }
                 }
@@ -83,7 +93,7 @@ function usedata(response) {
                 scatterplot(newwis, "Headcount of Women Researchers in 6 Countries", "Headcount of Women Researchers");
             }
         };
-    for (let key in countrycolor) {
+    for (let key in full_countrycolor) {
         document.getElementById(key).onclick = function clickcheckbox() {
             updatecheckbox(key);
         };
@@ -107,18 +117,20 @@ function usedata(response) {
     var slider = create_slider('year-slider');
     slider.noUiSlider.on('update', function (values, handle) {
         // update new time range
-        let range = {"low": parseInt(values[0]), "high": parseInt(values[1])};
+        range = {"low": parseInt(values[0]), "high": parseInt(values[1])};
 
         // update dateset
         newwis = [];
         newcc = [];
         for (let key in womeninscience) {
-            if (womeninscience[key].time >= range.low && womeninscience[key].time <= range.high) {
+            if (womeninscience[key].time >= range.low && womeninscience[key].time <= range.high &&
+                countrycolor.hasOwnProperty(womeninscience[key].Country)) {
                 newwis.push(womeninscience[key]);
             }
         }
         for (let key in consconf) {
-            if (consconf[key].time >= range.low && consconf[key].time <= range.high) {
+            if (consconf[key].time >= range.low && consconf[key].time <= range.high &&
+                countrycolor.hasOwnProperty(consconf[key].Country)) {
                 newcc.push(consconf[key]);
             }
         }
@@ -239,7 +251,7 @@ function scatterplot(dataset0, title, yAxistext) {
 
     // setup fill color
     var cValue = function(d) { return d.Country;},
-        color = function(d) { return countrycolor[cValue(d)]; };
+        color = function(d) { return full_countrycolor[cValue(d)]; };
 
     // add the graph canvas to the body of the webpage
     var svg = d3.select("#scatterplot").append("svg")
@@ -311,7 +323,7 @@ function scatterplot(dataset0, title, yAxistext) {
     var cy = margin.top;
     var r = 7;
     var gap = {"vertical": 20, "horizontal": 15};
-    var countries = Object.keys(countrycolor);
+    var countries = Object.keys(countrycolor).sort();
     for (let i = 0; i < countries.length; i++) {
         // key
         let key = countries[i];
