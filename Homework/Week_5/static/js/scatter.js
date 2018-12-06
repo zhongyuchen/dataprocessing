@@ -392,13 +392,31 @@ function scatterplot(dataset0, title, yAxistext) {
             }
 
             // regression line
-            svg.append("line")
+            var line = svg.append("line")
                 .attr("x1", xScale(x1))
                 .attr("y1", yScale(y1))
                 .attr("x2", xScale(x2))
                 .attr("y2", yScale(y2))
                 .attr("stroke","red")
                 .attr("stroke-width",3);
+
+            // regression function text
+            let x = width - margin.left;
+            let y = height + margin.bottom / 4;
+            if (x1 == x2) {
+                svg.append("text")
+                    .attr("x", x)
+                    .attr("y", y)
+                    .attr("stroke", "red")
+                    .text("x = " + x1);
+            }
+            else {
+                svg.append("text")
+                    .attr("x", x)
+                    .attr("y", y)
+                    .attr("stroke", "red")
+                    .text("y = " + b.toFixed(2) + "x " + a.toFixed(2));
+            }
         }
     }
     else {
