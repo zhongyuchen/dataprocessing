@@ -100,17 +100,8 @@ function barchart(obj) {
         // update new time range
         let range = {"low": parseInt(values[0]), "high": parseInt(values[1])};
 
-        let newobj = {};
-        for (let i = range.low; i <= range.high; i++) {
-            let year = obj[i.toString()];
-            year.forEach(function(y) {
-                if (newobj.hasOwnProperty(y.Country) == 0) {
-                    newobj[y.Country] = 0;
-                }
-
-                newobj[y.Country] += y.Value;
-            });
-        }
+        // according to the range, sum up the values
+        let newobj = sum_range(obj, range);
 
         // extract country and value from object and put into list
         let list = country_value(newobj);
@@ -163,6 +154,22 @@ function barchart(obj) {
             .on("mouseover", tip.show)
       .on("mouseout", tip.hide);
     }
+}
+
+function sum_range(obj, range) {
+    let newobj = {};
+    for (let i = range.low; i <= range.high; i++) {
+        let year = obj[i.toString()];
+        year.forEach(function(y) {
+            if (newobj.hasOwnProperty(y.Country) == 0) {
+                newobj[y.Country] = 0;
+            }
+
+            newobj[y.Country] += y.Value;
+        });
+    }
+
+    return newobj;
 }
 
 function transformdata(csvdata) {
@@ -251,4 +258,8 @@ function create_slider(id) {
         }
     });
     return slider;
+}
+
+function piechartdata() {
+
 }
