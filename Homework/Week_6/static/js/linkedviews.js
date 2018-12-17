@@ -14,6 +14,14 @@ var year_range = {
     "min": 2009,
     "max": 2018
 };
+var current_range = {
+    "low": 2009,
+    "high": 2018
+};
+var current_bar = {
+    "Country": country_list[0],
+    "Value": 6891
+};
 
 window.onload = function() {
     readcsv('data/asylum_seekers.csv');
@@ -30,12 +38,13 @@ function readcsv(filename) {
 }
 
 function usedata(obj) {
-    let barobj = barchartdata(obj);
-
-    barchart(barobj);
+    piechart();
+    barchart(obj);
 }
 
-function barchart(obj) {
+function barchart(fullobj) {
+    let obj = barchartdata(fullobj);
+
     var margin = {top: 20, right: 20, bottom: 60, left: 55},
         width = 1000 - margin.left - margin.right,
         height = 625 - margin.top - margin.bottom;
@@ -99,6 +108,8 @@ function barchart(obj) {
     slider.noUiSlider.on('update', function (values, handle) {
         // update new time range
         let range = {"low": parseInt(values[0]), "high": parseInt(values[1])};
+        current_range.low = range.low;
+        current_range.high = range.high;
 
         // according to the range, sum up the values
         let newobj = sum_range(obj, range);
@@ -108,6 +119,7 @@ function barchart(obj) {
         // get the range of year for title
         let title_year = get_titleyear(range);
 
+        rangeupdatepie(newobj, fullobj);
         updatebar(list, title_year);
     });
 
@@ -144,7 +156,8 @@ function barchart(obj) {
         .attr("y", yScale(0))
         .attr("height", height - yScale(0))
               .on("mouseover", tip.show)
-      .on("mouseout", tip.hide);
+      .on("mouseout", tip.hide)
+          .on("click", clickupdatepie);
 
       // the "UPDATE" set:
       bars.transition().duration(300).attr("x", xMap) // (d) is one item from the data array, x is the scale object from above
@@ -152,8 +165,97 @@ function barchart(obj) {
         .attr("y", yMap)
         .attr("height", function(d) { return height - yMap(d); })
             .on("mouseover", tip.show)
-      .on("mouseout", tip.hide);
+      .on("mouseout", tip.hide)
+          .on("click", clickupdatepie);
     }
+
+    function clickupdatepie(d) {
+        // update current bar
+        current_bar.Country = d.Country;
+        current_bar.Value = d.Value;
+
+        // update data
+        updatepie(fullobj);
+    }
+}
+
+function rangeupdatepie(newobj, fullobj) {
+    // update current bar
+    current_bar.Value = newobj[current_bar.Country];
+
+    // update data
+    updatepie(fullobj);
+}
+
+function updatepie(fullobj) {
+    let pielist = updatepiedata(fullobj);
+
+    var margin = {top: 20, right: 20, bottom: 20, left: 20},
+        width = 1000 - margin.left - margin.right,
+        height = 625 - margin.top - margin.bottom,
+        radius = width / 2;
+
+    var pie = d3.pie().value(function(d) {return d.Value});
+    var arc = d3.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(0);
+    var labelArc = d3.arc()
+        .outerRadius(radius - 50)
+        .innerRadius(radius - 50);
+
+    var svg= d3.select("#piechart").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + (width/2) + ","+(height/2)+")");
+
+    var g = svg.selectAll(".arc")
+        .data(pie(pielist))
+        .enter().
+        append("g").attr("class", "arc");
+
+    g.append("path")
+        .attr("d", arc)
+        .style("fill", "blue");
+
+    g.append("text")
+        .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+        .attr("dy", ".35em")
+        .text(function(d) { return d.Country; });
+}
+
+function piechart() {
+    // updatepie();
+}
+
+function updatepiedata(obj) {
+    let newobj = {
+        "Other": 0
+    };
+    for (let i = current_range.low; i <= current_range.high; i++) {
+        let country = obj[i.toString()][current_bar.Country];
+
+        for (let origin in country) {
+            if (newobj.hasOwnProperty(origin) == 0) {
+                newobj[origin] = 0;
+            }
+
+            newobj[origin] += country[origin];
+        }
+    }
+
+    let lowest = 0.05;
+    for (let origin in newobj) {
+        if (origin != "Other" &&
+            (newobj[origin] / current_bar.Value) < lowest) {
+            newobj["Other"] += newobj[origin];
+            delete newobj[origin];
+        }
+    }
+
+    let list = country_value(newobj);
+
+    return list;
 }
 
 function sum_range(obj, range) {
@@ -258,8 +360,4 @@ function create_slider(id) {
         }
     });
     return slider;
-}
-
-function piechartdata() {
-
 }
