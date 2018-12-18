@@ -23,6 +23,7 @@ var current_bar = {
     "Value": 6891
 };
 var comma = d3.format(",");
+var persent = d3.format(".2%");
 
 window.onload = function() {
     readcsv('data/asylum_seekers.csv');
@@ -169,6 +170,10 @@ function barchart(fullobj) {
     }
 
     function clickupdatepie(d) {
+        // change color
+        d3.selectAll('.clickbar').attr("class", "bar");
+        d3.select(this).attr("class", "clickbar");
+
         // update current bar
         current_bar.Country = d.Country;
         current_bar.Value = d.Value;
@@ -189,7 +194,7 @@ function rangeupdatepie(newobj, fullobj) {
 function updatepie(fullobj) {
     let pielist = updatepiedata(fullobj);
 
-    var margin = {top: 50, right: 50, bottom: 50, left: 50},
+    var margin = {top: 0, right: 0, bottom: 0, left: 0},
         width = 1000 - margin.left - margin.right,
         height = 625 - margin.top - margin.bottom,
         radius = 220;
@@ -218,12 +223,12 @@ function updatepie(fullobj) {
         .attr("width", width)
         .attr("height", height)
         .append("g")
-        .attr("transform", "translate(" + (width/2) + ","+(height/2)+")");
+        .attr("transform", "translate(" + (width/5*2) + ","+(height/2)+")");
 
     svg.append("text")
         .attr("class", "bartitle")
-        .attr("x", 0)
-        .attr("y", -radius)
+        .attr("x", width/10)
+        .attr("y", -radius - 40)
         .attr("text-anchor", "middle")
         .style("font-size", "25px")
         .text(comma(current_bar.Value) +
@@ -257,10 +262,30 @@ function updatepie(fullobj) {
         .attr("text-anchor", "middle")
         .attr("dy", ".35em")
         .text(function(d) {
-            return d.data.Country + " "+comma(d.data.Value);
+            return d.data.Country;
         });
 
-    d3.selectAll("text").raise();
+        // draw legend colored circles
+    var cx = radius + 20;
+    var cy = -radius + 30;
+    var r = 7;
+    var gap = {"vertical": 20, "horizontal": 15};
+    for (let i = 0; i < pielist.length; i++) {
+        // key
+        let key = pielist[i].Country;
+        // legend
+          svg.append("circle")
+      .attr("cx", cx)
+      .attr("cy", cy + i * gap.vertical)
+      .attr("r", r)
+      .style("fill", color(key));
+          // legend text
+  svg.append("text")
+      .attr("x", cx + gap.horizontal)
+      .attr("y", cy + r / 2 + i * gap.vertical)
+      .text(key+" - "+comma(pielist[i].Value) +
+          " ("+persent(pielist[i].Value/current_bar.Value)+")");
+    }
 
     function pieTween(b) {
     b.innerRadius = 0;

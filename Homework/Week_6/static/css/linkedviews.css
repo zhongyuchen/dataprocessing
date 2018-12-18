@@ -9,6 +9,10 @@
   fill: orange;
 }
 
+.clickbar {
+  fill: red;
+}
+
 .axis {
   font: 10px sans-serif;
 }
