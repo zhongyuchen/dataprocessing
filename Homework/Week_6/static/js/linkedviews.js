@@ -22,6 +22,7 @@ var current_bar = {
     "Country": country_list[0],
     "Value": 6891
 };
+var comma = d3.format(",");
 
 window.onload = function() {
     readcsv('data/asylum_seekers.csv');
@@ -38,7 +39,6 @@ function readcsv(filename) {
 }
 
 function usedata(obj) {
-    piechart();
     barchart(obj);
 }
 
@@ -62,7 +62,6 @@ function barchart(fullobj) {
 
     var xAxis = d3.axisBottom(xScale);
     var yAxis = d3.axisLeft(yScale).ticks(10);
-    var comma = d3.format(",");
 
     var svg = d3.select("#barchart").append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -190,10 +189,10 @@ function rangeupdatepie(newobj, fullobj) {
 function updatepie(fullobj) {
     let pielist = updatepiedata(fullobj);
 
-    var margin = {top: 20, right: 20, bottom: 20, left: 20},
-        width = 500 - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom,
-        radius = 200;
+    var margin = {top: 50, right: 50, bottom: 50, left: 50},
+        width = 1000 - margin.left - margin.right,
+        height = 625 - margin.top - margin.bottom,
+        radius = 220;
 
     // var color = d3.scaleOrdinal()
     // .domain(pielist.map(d => d.Country))
@@ -204,10 +203,10 @@ function updatepie(fullobj) {
 
     var arc = d3.arc()
         .outerRadius(radius - 10)
-        .innerRadius(radius - 70);
+        .innerRadius(0);
     var labelArc = d3.arc()
-        .outerRadius(radius - 70)
-        .innerRadius(radius - 70);
+        .outerRadius(radius - 50)
+        .innerRadius(radius - 50);
 
     var pie = d3.pie()
         .sort(null)
@@ -221,6 +220,16 @@ function updatepie(fullobj) {
         .append("g")
         .attr("transform", "translate(" + (width/2) + ","+(height/2)+")");
 
+    svg.append("text")
+        .attr("class", "bartitle")
+        .attr("x", 0)
+        .attr("y", -radius)
+        .attr("text-anchor", "middle")
+        .style("font-size", "25px")
+        .text(comma(current_bar.Value) +
+            " Asylum Seekers in "+current_bar.Country+
+            " ("+ current_range.low+" - "+current_range.high+")");
+
     var g = svg.selectAll(".arc")
         .data(pie(pielist))
         .enter()
@@ -232,27 +241,32 @@ function updatepie(fullobj) {
         .transition()
         .ease(d3.easeLinear)
         .duration(2000)
+        .attr("stroke", "white")
         .attrTween("d", pieTween);
 
     g.append("text")
         .transition()
         .ease(d3.easeLinear)
         .duration(2000)
-        .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+         .attr("transform", function(d) {
+	  	        var midAngle = ((d.startAngle + d.endAngle)/2 < Math.PI  )? d.startAngle/2 + d.endAngle/2 : d.startAngle/2  + d.endAngle/2 + Math.PI ;
+	  	        return "translate(" + labelArc.centroid(d)[0] + "," + labelArc.centroid(d)[1] + ") rotate(-90) rotate(" + (midAngle * 180/Math.PI) + ")";
+         })
+	  .style("font-size", "15px")
+        .style("font-weight", "bold")
+        .attr("text-anchor", "middle")
         .attr("dy", ".35em")
-        .text(function(d) { return d.data.Country; });
+        .text(function(d) {
+            return d.data.Country + " "+comma(d.data.Value);
+        });
+
+    d3.selectAll("text").raise();
 
     function pieTween(b) {
     b.innerRadius = 0;
     var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
     return function(t) { return arc(i(t)); }
-}
-}
-
-
-
-function piechart() {
-    // updatepie();
+    }
 }
 
 function updatepiedata(obj) {
