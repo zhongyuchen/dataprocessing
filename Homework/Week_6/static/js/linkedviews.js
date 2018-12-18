@@ -175,7 +175,7 @@ function barchart(fullobj) {
         current_bar.Value = d.Value;
 
         // update data
-        // updatepie(fullobj);
+        updatepie(fullobj);
     }
 }
 
@@ -184,103 +184,72 @@ function rangeupdatepie(newobj, fullobj) {
     current_bar.Value = newobj[current_bar.Country];
 
     // update data
-    // updatepie(fullobj);
+    updatepie(fullobj);
 }
 
 function updatepie(fullobj) {
-    // let pielist = updatepiedata(fullobj);
-    //
-    // var margin = {top: 20, right: 20, bottom: 20, left: 20},
-    //     width = 625 - margin.left - margin.right,
-    //     height = 625 - margin.top - margin.bottom,
-    //     radius = width / 2;
-    //
-    // var arc = d3.arc()
-    //     .outerRadius(radius - 10)
-    //     .innerRadius(0);
-    // var labelArc = d3.arc()
-    //     .outerRadius(radius - 50)
-    //     .innerRadius(radius - 50);
-    //
-    // var pie = d3.pie()
-    //     .sort(null)
-    //     .value(function(d) {return d.Value});
-    //
-    // var svg= d3.select("#piechart").append("svg")
-    //     .attr("width", width)
-    //     .attr("height", height)
-    //     .append("g")
-    //     .attr("transform", "translate(" + (width/2) + ","+(height/2)+")");
-    //
-    // var g = svg.selectAll(".arc")
-    //     .data(pie(pielist))
-    //     .enter()
-    //     .append("g").attr("class", "arc");
-    //
-    // g.append("path")
-    //     .attr("d", arc)
-    //     .style("fill", "blue");
-    //
-    // g.append("text")
-    //     .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
-    //     .attr("dy", ".35em")
-    //     .text(function(d) { return d.Country; });
+    let pielist = updatepiedata(fullobj);
 
+    var margin = {top: 20, right: 20, bottom: 20, left: 20},
+        width = 500 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom,
+        radius = 200;
 
-//     var width = 960,
-//     height = 500,
-//     radius = Math.min(width, height) / 2;
-//
-// var color = d3.scale.category20();
-//
-// var pie = d3.layout.pie()
-//     .value(function(d) { return d.apples; })
-//     .sort(null);
-//
-// var arc = d3.svg.arc()
-//     .innerRadius(radius - 100)
-//     .outerRadius(radius - 20);
-//
-// var svg = d3.select("body").append("svg")
-//     .attr("width", width)
-//     .attr("height", height)
-//   .append("g")
-//     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-//
-//     d3.tsv("data.tsv", type, function(error, data) {
-//       if (error) throw error;
-//
-//       var path = svg.datum(data).selectAll("path")
-//           .data(pie)
-//         .enter().append("path")
-//           .attr("fill", function(d, i) { return color(i); })
-//           .attr("d", arc)
-//           .each(function(d) { this._current = d; }); // store the initial angles
-//
-//       d3.selectAll("input")
-//           .on("change", change);
-//
-//       var timeout = setTimeout(function() {
-//         d3.select("input[value=\"oranges\"]").property("checked", true).each(change);
-//       }, 2000);
-//
-//       function change() {
-//         var value = this.value;
-//         clearTimeout(timeout);
-//         pie.value(function(d) { return d[value]; }); // change the value function
-//         path = path.data(pie); // compute the new angles
-//         path.transition().duration(750).attrTween("d", arcTween); // redraw the arcs
-//       }
-//     });
-//
-//     function arcTween(a) {
-//       var i = d3.interpolate(this._current, a);
-//       this._current = i(0);
-//       return function(t) {
-//         return arc(i(t));
-//       };
-//     }
+    // var color = d3.scaleOrdinal()
+    // .domain(pielist.map(d => d.Country))
+    // .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), pielist.length).reverse());
+
+    var color = d3.scaleOrdinal()
+        .range(['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a']);
+
+    var arc = d3.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(radius - 70);
+    var labelArc = d3.arc()
+        .outerRadius(radius - 70)
+        .innerRadius(radius - 70);
+
+    var pie = d3.pie()
+        .sort(null)
+        .value(function(d) {return d.Value});
+
+    d3.select("#piechart").select("svg").remove();
+
+    var svg= d3.select("#piechart").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", "translate(" + (width/2) + ","+(height/2)+")");
+
+    var g = svg.selectAll(".arc")
+        .data(pie(pielist))
+        .enter()
+        .append("g").attr("class", "arc");
+
+    g.append("path")
+        .attr("d", arc)
+        .style("fill", function(d) { return color(d.data.Country); })
+        .transition()
+        .ease(d3.easeLinear)
+        .duration(2000)
+        .attrTween("d", pieTween);
+
+    g.append("text")
+        .transition()
+        .ease(d3.easeLinear)
+        .duration(2000)
+        .attr("transform", function(d) { return "translate(" + labelArc.centroid(d) + ")"; })
+        .attr("dy", ".35em")
+        .text(function(d) { return d.data.Country; });
+
+    function pieTween(b) {
+    b.innerRadius = 0;
+    var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
+    return function(t) { return arc(i(t)); }
 }
+}
+
+
 
 function piechart() {
     // updatepie();
