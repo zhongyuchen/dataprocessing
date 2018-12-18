@@ -204,7 +204,7 @@ function updatepie(fullobj) {
     // .range(d3.quantize(t => d3.interpolateSpectral(t * 0.8 + 0.1), pielist.length).reverse());
 
     var color = d3.scaleOrdinal()
-        .range(['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a']);
+        .range(['#8dd3c7','#ffffb3','#bebada','#fb8072','#80b1d3','#fdb462','#b3de69','#fccde5','#d9d9d9','#bc80bd','#ccebc5','#ffed6f']);
 
     var arc = d3.arc()
         .outerRadius(radius - 10)
