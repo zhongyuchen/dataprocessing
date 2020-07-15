@@ -4,7 +4,7 @@
 * Zhongyu Chen, 12455822
 
 ## GitHub Pages
-* https://zychn.github.io/dataprocessing/
+* https://zhongyuchen.github.io/dataprocessing/
 
 ## Structure
 - Homework: weekly Data Processing programming assignments.
